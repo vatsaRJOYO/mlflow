@@ -29,7 +29,7 @@ import { CollapsibleSection } from '../../common/components/CollapsibleSection';
 import { EditableNote } from '../../common/components/EditableNote';
 import { EditableTagsTableView } from '../../common/components/EditableTagsTableView';
 import { getModelVersionTags } from '../reducers';
-import { setModelVersionTagApi, deleteModelVersionTagApi } from '../actions';
+import { setModelVersionTagApi, deleteModelVersionTagApi, triggerModelVersionDeploymentApi } from '../actions';
 import { connect } from 'react-redux';
 import { PageHeader } from '../../shared/building_blocks/PageHeader';
 import { Spacer } from '../../shared/building_blocks/Spacer';
@@ -160,29 +160,36 @@ export class ModelVersionViewImpl extends React.Component {
     const { version } = this.props.modelVersion;
     form.validateFields((err, values) => {
       if (!err) {
-        console.log(JSON.stringify({values, modelName, version}));
-        // this.setState({ isDeploymentRequestPending: true });
-        // this.props
-        //   .setModelVersionTagApi(modelName, version, values.name, values.value)
-        //   .then(() => {
-        //     this.setState({ isDeploymentRequestPending: false });
-        //     form.resetFields();
-        //   })
-        //   .catch((ex) => {
-        //     this.setState({ isDeploymentRequestPending: false });
-        //     console.error(ex);
-        //     message.error(
-        //       this.props.intl.formatMessage(
-        //         {
-        //           defaultMessage: 'Failed to add tag. Error: {userVisibleError}',
-        //           description: 'Text for user visible error when adding tag in model version view',
-        //         },
-        //         {
-        //           userVisibleError: ex.getUserVisibleError(),
-        //         },
-        //       ),
-        //     );
-        //   });
+        this.setState({ isDeploymentRequestPending: true });
+        this.props
+          .triggerModelVersionDeploymentApi(modelName, version, values.environment, values['service-name'] )
+          .then(() => {
+            this.setState({ isDeploymentRequestPending: false });
+            form.resetFields();
+            message.info(
+              this.props.intl.formatMessage(
+                {
+                  defaultMessage: 'Deployment triggered.',
+                  description: 'Text for user visible notification when successfully triggered deploy model version in model version view',
+                }
+              ),
+            );
+          })
+          .catch((ex) => {
+            this.setState({ isDeploymentRequestPending: false });
+            console.error(ex);
+            message.error(
+              this.props.intl.formatMessage(
+                {
+                  defaultMessage: 'Failed to Deploy Model version. Error: {userVisibleError}',
+                  description: 'Text for user visible error when deploying model version in model version view',
+                },
+                {
+                  userVisibleError: ex.getUserVisibleError(),
+                },
+              ),
+            );
+          });
       }
     });
   };
@@ -581,7 +588,7 @@ const mapStateToProps = (state, ownProps) => {
   const tags = getModelVersionTags(modelName, version, state);
   return { tags };
 };
-const mapDispatchToProps = { setModelVersionTagApi, deleteModelVersionTagApi };
+const mapDispatchToProps = { setModelVersionTagApi, deleteModelVersionTagApi, triggerModelVersionDeploymentApi };
 
 export const ModelVersionView = connect(
   mapStateToProps,

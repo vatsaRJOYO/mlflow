@@ -316,15 +316,14 @@ export class Services {
   }
 
     /**
-   * Delete model version tag
+   * Deploy model version
    * @param data
    * @param success
    * @param error
    * @returns {*|jQuery|*|*}
    */
-     static deleteModelVersionTag({ data, success, error }) {
-      // return $.ajax(Utils.getAjaxUrl('ajax-api/2.0/preview/mlflow/model-versions/delete-tag'), {
-      return $.ajax(Utils.getAjaxUrl('ajax-api/2.0/preview/mlflow/model-versions/delete-tag'), {
+     static deployModelVersion({ data, success, error }) {
+      return $.ajax(Utils.getAjaxUrl('ajax-api/2.0/preview/mlflow/model-versions/oyo-deploy'), {
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',

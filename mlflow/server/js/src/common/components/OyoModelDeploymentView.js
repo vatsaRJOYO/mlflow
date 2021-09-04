@@ -1,6 +1,5 @@
 import React from 'react'
-import Utils from '../utils/Utils';
-import PropTypes, { symbol } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Form, Input, Button, Radio } from 'antd/lib/index';
 import _ from 'lodash';
 import { Spacer } from '../../shared/building_blocks/Spacer';
@@ -46,7 +45,7 @@ export class OyoModelDeploymentViewImpl extends React.Component {
               description: 'Label Text for environment for model deployment',
               })}
             >
-              {getFieldDecorator('deployment-env',{
+              {getFieldDecorator('environment',{
                 initialValue: "staging",
                 rules: [
                   {

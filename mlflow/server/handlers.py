@@ -62,6 +62,7 @@ from mlflow.protos.model_registry_pb2 import (
     DeleteRegisteredModelTag,
     SetModelVersionTag,
     DeleteModelVersionTag,
+    DeployModelVersion,
 )
 from mlflow.protos.databricks_pb2 import RESOURCE_DOES_NOT_EXIST, INVALID_PARAMETER_VALUE
 from mlflow.store.artifact.artifact_repository_registry import get_artifact_repository
@@ -797,6 +798,21 @@ def _delete_model_version_tag():
     )
     return _wrap_response(DeleteModelVersionTag.Response())
 
+@catch_mlflow_exception
+def _deploy_model_version():
+    request_message = _get_request_message(DeployModelVersion())
+    model_version = _get_model_registry_store().get_model_version(
+        name=request_message.name, version=request_message.version
+    )
+    registered_model = _get_model_registry_store().get_registered_model(name=request_message.name)
+
+    _logger.log(logging.INFO, str(model_version))
+    from mlflow.server.handler_util import deploy_model_version
+
+    deploy_model_version(request_message.environment, request_message.service_name, model_version, registered_model)
+    
+    return _wrap_response(DeployModelVersion.Response())
+
 
 def _add_static_prefix(route):
     prefix = os.environ.get(STATIC_PREFIX_ENV_VAR)
@@ -884,4 +900,5 @@ HANDLERS = {
     DeleteRegisteredModelTag: _delete_registered_model_tag,
     SetModelVersionTag: _set_model_version_tag,
     DeleteModelVersionTag: _delete_model_version_tag,
+    DeployModelVersion: _deploy_model_version,
 }

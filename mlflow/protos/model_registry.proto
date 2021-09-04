@@ -317,6 +317,23 @@ service ModelRegistryService {
       rpc_doc_title: "Delete Model Version Tag",
     };
   }
+
+  rpc deployModelVersion (DeployModelVersion) returns (DeployModelVersion.Response) {
+    option (rpc) = {
+      endpoints: [{
+        method: "POST",
+        path: "/preview/mlflow/model-versions/oyo-deploy"
+        since { major: 2, minor: 0},
+      }, {
+        method: "POST",
+        path: "/mlflow/model-versions/oyo-deploy"
+        since { major: 2, minor: 0},
+      }],
+      visibility: PUBLIC,
+      rpc_doc_title: "Deploy Model Version",
+    };
+  }
+
 }
 
 message RegisteredModel {
@@ -704,10 +721,10 @@ message SetModelVersionTag {
   option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
 
   // Unique name of the model.
-  optional string name = 1 [(validate_required) = true];
+  optional string name = 1;
 
   // Model version number.
-  optional string version = 2 [(validate_required) = true];
+  optional string version = 2;
 
   // Name of the tag. Maximum size depends on storage backend.
   // If a tag with this name already exists, its preexisting value will be replaced by the specified `value`.
@@ -746,6 +763,23 @@ message DeleteModelVersionTag {
 
   // Name of the tag. The name must be an exact match; wild-card deletion is not supported. Maximum size is 250 bytes.
   optional string key = 3 [(validate_required) = true];
+
+  message Response {
+  }
+}
+
+message DeployModelVersion {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  // Name of the registered model that the tag was logged under.
+  optional string name = 1 [(validate_required) = true];
+
+  // Model version number that the tag was logged under.
+  optional string version = 2 [(validate_required) = true];
+
+  optional string environment = 3 [(validate_required) = true];
+
+  optional string service_name = 4 [(validate_required) = true];
 
   message Response {
   }

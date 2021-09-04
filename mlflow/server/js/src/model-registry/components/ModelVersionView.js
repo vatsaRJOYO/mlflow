@@ -156,11 +156,11 @@ export class ModelVersionViewImpl extends React.Component {
   handleTriggerDeployment = (e) => {
     e.preventDefault();
     const { form } = this.deploymentFormRef.props;
-    const { modelName, runInfo } = this.props;
+    const { modelName } = this.props;
     const { version } = this.props.modelVersion;
     form.validateFields((err, values) => {
       if (!err) {
-        console.log(JSON.stringify(values));
+        console.log(JSON.stringify({values, modelName, version}));
         // this.setState({ isDeploymentRequestPending: true });
         // this.props
         //   .setModelVersionTagApi(modelName, version, values.name, values.value)

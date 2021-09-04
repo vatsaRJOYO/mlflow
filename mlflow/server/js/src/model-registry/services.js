@@ -314,4 +314,25 @@ export class Services {
       error: error,
     });
   }
+
+    /**
+   * Delete model version tag
+   * @param data
+   * @param success
+   * @param error
+   * @returns {*|jQuery|*|*}
+   */
+     static deleteModelVersionTag({ data, success, error }) {
+      // return $.ajax(Utils.getAjaxUrl('ajax-api/2.0/preview/mlflow/model-versions/delete-tag'), {
+      return $.ajax(Utils.getAjaxUrl('ajax-api/2.0/preview/mlflow/model-versions/delete-tag'), {
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data),
+        jsonp: false,
+        success: success,
+        error: error,
+      });
+    }
+
 }

@@ -34,6 +34,7 @@ import { connect } from 'react-redux';
 import { PageHeader } from '../../shared/building_blocks/PageHeader';
 import { Spacer } from '../../shared/building_blocks/Spacer';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { OyoModelDeploymentView } from '../../common/components/OyoModelDeploymentView';
 
 export class ModelVersionViewImpl extends React.Component {
   static propTypes = {
@@ -57,6 +58,7 @@ export class ModelVersionViewImpl extends React.Component {
     isDeleteModalConfirmLoading: false,
     showDescriptionEditor: false,
     isTagsRequestPending: false,
+    isDeploymentRequestPending: false,
   };
 
   componentDidMount() {
@@ -114,6 +116,10 @@ export class ModelVersionViewImpl extends React.Component {
     this.formRef = formRef;
   };
 
+  saveDeploymentFormRef = (formRef) => {
+    this.deploymentFormRef = formRef;
+  };
+
   handleAddTag = (e) => {
     e.preventDefault();
     const { form } = this.formRef.props;
@@ -143,6 +149,40 @@ export class ModelVersionViewImpl extends React.Component {
               ),
             );
           });
+      }
+    });
+  };
+
+  handleTriggerDeployment = (e) => {
+    e.preventDefault();
+    const { form } = this.deploymentFormRef.props;
+    const { modelName, runInfo } = this.props;
+    const { version } = this.props.modelVersion;
+    form.validateFields((err, values) => {
+      if (!err) {
+        console.log(JSON.stringify(values));
+        // this.setState({ isDeploymentRequestPending: true });
+        // this.props
+        //   .setModelVersionTagApi(modelName, version, values.name, values.value)
+        //   .then(() => {
+        //     this.setState({ isDeploymentRequestPending: false });
+        //     form.resetFields();
+        //   })
+        //   .catch((ex) => {
+        //     this.setState({ isDeploymentRequestPending: false });
+        //     console.error(ex);
+        //     message.error(
+        //       this.props.intl.formatMessage(
+        //         {
+        //           defaultMessage: 'Failed to add tag. Error: {userVisibleError}',
+        //           description: 'Text for user visible error when adding tag in model version view',
+        //         },
+        //         {
+        //           userVisibleError: ex.getUserVisibleError(),
+        //         },
+        //       ),
+        //     );
+        //   });
       }
     });
   };
@@ -385,6 +425,7 @@ export class ModelVersionViewImpl extends React.Component {
       isDeleteModalConfirmLoading,
       showDescriptionEditor,
       isTagsRequestPending,
+      isDeploymentRequestPending,
     } = this.state;
     const title = (
       <Spacer size='small' direction='horizontal'>
@@ -465,6 +506,24 @@ export class ModelVersionViewImpl extends React.Component {
               handleSaveEdit={this.handleSaveEdit}
               tags={tags}
               isRequestPending={isTagsRequestPending}
+            />
+          </CollapsibleSection>
+        </div>
+        <div>
+          <CollapsibleSection
+            title={
+              <FormattedMessage
+                defaultMessage='Deployments'
+                description='Title text for the Model Deployment section on the model versions view page'
+              />
+            }
+            defaultCollapsed={Utils.getVisibleTagValues(tags).length === 0}
+          >
+            <OyoModelDeploymentView
+              wrappedComponentRef={this.saveDeploymentFormRef}
+              handleTriggerDeployment={this.handleTriggerDeployment}
+              tags={tags}
+              isRequestPending={isDeploymentRequestPending}
             />
           </CollapsibleSection>
         </div>

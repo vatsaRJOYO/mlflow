@@ -524,7 +524,7 @@ export class ModelVersionViewImpl extends React.Component {
                 description='Title text for the Model Deployment section on the model versions view page'
               />
             }
-            defaultCollapsed={Utils.getVisibleTagValues(tags).length === 0}
+            defaultCollapsed={true}
           >
             <OyoModelDeploymentView
               wrappedComponentRef={this.saveDeploymentFormRef}

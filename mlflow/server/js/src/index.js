@@ -10,6 +10,13 @@ import store from './store';
 import { injectGlobal } from 'emotion';
 import { accessibilityOverrides } from './common/styles/accessibility-overrides';
 import { I18nUtils } from './i18n/I18nUtils';
+import AWS from 'aws-sdk';
+
+AWS.config.update({
+  region: process.env.REACT_APP_AWS_DEFAULT_REGION,
+  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+});
 
 setupAjaxHeaders();
 

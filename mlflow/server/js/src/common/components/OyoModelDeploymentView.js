@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { Form, Input, Button, Radio } from 'antd/lib/index';
-import _ from 'lodash';
 import { Spacer } from '../../shared/building_blocks/Spacer';
 import { FormattedMessage, injectIntl } from 'react-intl';
 

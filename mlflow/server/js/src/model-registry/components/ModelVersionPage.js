@@ -102,7 +102,9 @@ export class ModelVersionPageImpl extends React.Component {
       )
       .then(({ value }) => {
         if (value && !value[getProtoField('model_version')].run_link) {
-          this.props.getRunApi(value[getProtoField('model_version')].run_id, this.getRunRequestId);
+          if(value[getProtoField('model_version')].run_id){
+            this.props.getRunApi(value[getProtoField('model_version')].run_id, this.getRunRequestId);
+          }
         }
       });
   }

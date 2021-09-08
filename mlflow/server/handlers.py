@@ -63,6 +63,8 @@ from mlflow.protos.model_registry_pb2 import (
     SetModelVersionTag,
     DeleteModelVersionTag,
     DeployModelVersion,
+    CreateModelVersionDeployment,
+    UpdateModelVersionDeployment,
 )
 from mlflow.protos.databricks_pb2 import RESOURCE_DOES_NOT_EXIST, INVALID_PARAMETER_VALUE
 from mlflow.store.artifact.artifact_repository_registry import get_artifact_repository
@@ -813,6 +815,42 @@ def _deploy_model_version():
     
     return _wrap_response(DeployModelVersion.Response())
 
+@catch_mlflow_exception
+def _create_model_version_deployment():
+    request_message = _get_request_message(CreateModelVersionDeployment())
+    model_version_deployment = _get_model_registry_store().create_model_deployment(
+        name=request_message.name,
+        version=request_message.version,
+        environment=request_message.environment,
+        service_name=request_message.service_name,
+        cpu=request_message.cpu,
+        memory=request_message.memory,
+        initial_delay=request_message.initial_delay,
+        overwrite=request_message.overwrite,
+    )
+    response_message = model_version_deployment.to_proto()
+    return _wrap_response(response_message)
+
+
+@catch_mlflow_exception
+def _update_model_version_deployment():
+    request_message = _get_request_message(CreateModelVersionDeployment())
+    model_version_deployment = _get_model_registry_store().update_model_version_deployment(
+        id=request_message.id,
+        model_name=request_message.model_name,
+        model_version=request_message.model_version,
+        jira_id=request_message.jira_id,
+        status=request_message.status,
+        message=request_message.message,
+        job_url=request_message.job_url,
+        helm_url=request_message.helm_url,
+
+    )
+    response_message = model_version_deployment.to_proto()
+    return _wrap_response(response_message)
+
+
+
 
 def _add_static_prefix(route):
     prefix = os.environ.get(STATIC_PREFIX_ENV_VAR)
@@ -901,4 +939,7 @@ HANDLERS = {
     SetModelVersionTag: _set_model_version_tag,
     DeleteModelVersionTag: _delete_model_version_tag,
     DeployModelVersion: _deploy_model_version,
+    CreateModelVersionDeployment: _create_model_version_deployment,
+    UpdateModelVersionDeployment: _update_model_version_deployment,
+
 }

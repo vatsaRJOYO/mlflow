@@ -1,3 +1,5 @@
+from sys import version
+from mlflow.pyfunc.scoring_server import init
 import time
 
 import logging
@@ -25,6 +27,7 @@ from mlflow.store.db.base_sql_model import Base
 from mlflow.store.entities.paged_list import PagedList
 from mlflow.store.model_registry.abstract_store import AbstractStore
 from mlflow.store.model_registry.dbmodels.models import (
+    SqlModelVersionDeployment,
     SqlRegisteredModel,
     SqlModelVersion,
     SqlRegisteredModelTag,
@@ -38,6 +41,7 @@ from mlflow.utils.validation import (
     _validate_model_name,
     _validate_model_version,
     _validate_tag_name,
+    _validate_model_deployment_service_name,
 )
 
 _logger = logging.getLogger(__name__)
@@ -139,7 +143,10 @@ class SqlAlchemyStore(AbstractStore):
         # of the eager loading procedure. For more information about relationship loading
         # techniques, see https://docs.sqlalchemy.org/en/13/orm/
         # loading_relationships.html#relationship-loading-techniques
-        return [sqlalchemy.orm.subqueryload(SqlModelVersion.model_version_tags)]
+        return [
+            sqlalchemy.orm.subqueryload(SqlModelVersion.model_version_tags), 
+            sqlalchemy.orm.subqueryload(SqlModelVersion.model_version_deployments), 
+        ]
 
     def _save_to_db(self, session, objs):
         """
@@ -838,3 +845,120 @@ class SqlAlchemyStore(AbstractStore):
             existing_tag = self._get_model_version_tag(session, name, version, key)
             if existing_tag is not None:
                 session.delete(existing_tag)
+    
+    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite):
+
+        _validate_model_name(name)
+        _validate_model_version(version)
+        _validate_model_deployment_service_name(service_name)
+        with self.ManagedSessionMaker() as session:
+            creation_time = now()
+            try:
+                sql_model_version = self._get_sql_model_version(session, name, version=version)
+                sql_model_version.last_updated_time = creation_time
+                model_version_deployment = SqlModelVersionDeployment(
+                    name=name,
+                    version=version,
+                    creation_time=creation_time,
+                    last_updated_time=creation_time,
+                    environment=environment,
+                    service_name=service_name,
+                    cpu=cpu,
+                    memory=memory,
+                    initial_delay=initial_delay,
+                    overwrite=overwrite
+                )
+                self._save_to_db(session, [sql_model_version, model_version_deployment])
+                session.flush()
+                return model_version_deployment.to_mlflow_entity()
+            except sqlalchemy.exc.IntegrityError:
+                _logger.info(
+                    "Model Version deployment creation error (name=%s version=%s).",
+                    name,
+                    str(version)
+                )
+        raise MlflowException(
+            "Model Version deployment creation error creation error (name={} version={}). Giving up."
+        )
+
+    @classmethod
+    def _get_model_version_deployment_from_db(cls, session, id, conditions, query_options=None):
+        if query_options is None:
+            query_options = []
+        versions = session.query(SqlModelVersionDeployment).options(*query_options).filter(*conditions).all()
+
+        if len(versions) == 0:
+            raise MlflowException(
+                "Model Version (id ={}) " "not found".format(id),
+                RESOURCE_DOES_NOT_EXIST,
+            )
+        return versions[0]
+    
+    @classmethod
+    def _get_sql_model_version_deployment(cls, session, id):
+
+        _validate_model_version(id)
+        conditions = [
+            SqlModelVersionDeployment.id == id,
+        ]
+        return cls._get_model_version_deployment_from_db(session, id, conditions, [])
+
+    def update_model_version_deployment(self, id, model_name=None, model_version=None, jira_id=None, status=None, message=None, job_url=None, helm_url=None):
+
+        def isStringEmpty(value):
+            if value == "" or value is None or  not isinstance(value, str):
+                return True
+            return False
+
+        with self.ManagedSessionMaker() as session:
+            last_updated_time = now()
+
+            sql_model_version_deployment = self._get_sql_model_version_deployment(
+                session=session, id = id
+            )
+
+            if (not isStringEmpty(model_name) and sql_model_version_deployment.model_name != model_name):
+                raise MlflowException(
+                    "Model Version deployment (id={}, name={}) " "not found".format(id, model_name),
+                    RESOURCE_DOES_NOT_EXIST,
+                )
+            
+            try:
+                if int(model_version) != int(sql_model_version_deployment.model_version):
+                    raise MlflowException(
+                        "Model Version deployment (id={}, version={}) " "not found".format(id, version),
+                        RESOURCE_DOES_NOT_EXIST,
+                    )
+            except ValueError:
+                raise MlflowException(
+                    "Model version must be an integer, got '{}'".format(model_version),
+                    error_code=INVALID_PARAMETER_VALUE,
+                )
+            
+            if sql_model_version_deployment.model_version.current_stage == STAGE_DELETED_INTERNAL:
+                raise MlflowException(
+                    "Model version stage must not be deleted , got '{}'".format(sql_model_version_deployment.cuttent_stage),
+                    error_code=INVALID_PARAMETER_VALUE,
+                )
+            
+            if not isStringEmpty(jira_id):
+                sql_model_version_deployment.jira_id = jira_id
+            
+            if not isStringEmpty(jira_id):
+                sql_model_version_deployment.status = status
+            
+            if not isStringEmpty(jira_id):
+                sql_model_version_deployment.message = message
+            
+            if not isStringEmpty(jira_id):
+                sql_model_version_deployment.job_url = job_url
+            
+            if not isStringEmpty(jira_id):
+                sql_model_version_deployment.helm_url = helm_url
+                
+            sql_model_version_deployment.last_updated_time = last_updated_time
+            self._save_to_db(session, [ sql_model_version_deployment])
+            return sql_model_version_deployment.to_mlflow_entity()
+
+
+

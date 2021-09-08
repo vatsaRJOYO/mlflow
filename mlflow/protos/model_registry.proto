@@ -334,6 +334,38 @@ service ModelRegistryService {
     };
   }
 
+    rpc updateModelVersionDeployment (ModelVersionDeployment) returns (ModelVersionDeployment) {
+    option (rpc) = {
+      endpoints: [{
+        method: "POST",
+        path: "/preview/mlflow/model-versions/update-deployment"
+        since { major: 2, minor: 0},
+      }, {
+        method: "POST",
+        path: "/mlflow/model-versions/update-deployment"
+        since { major: 2, minor: 0},
+      }],
+      visibility: PUBLIC,
+      rpc_doc_title: "Update Model Version Deployment entry",
+    };
+  }
+
+  rpc createModelVersionDeployment (ModelVersionDeployment) returns (ModelVersionDeployment) {
+    option (rpc) = {
+      endpoints: [{
+        method: "POST",
+        path: "/preview/mlflow/model-versions/create-deployment"
+        since { major: 2, minor: 0},
+      }, {
+        method: "POST",
+        path: "/mlflow/model-versions/create-deployment"
+        since { major: 2, minor: 0},
+      }],
+      visibility: PUBLIC,
+      rpc_doc_title: "Create Model Version Deployment entry",
+    };
+  }
+
 }
 
 message RegisteredModel {
@@ -412,6 +444,9 @@ message ModelVersion {
 
   // Run Link: Direct link to the run that generated this version
   optional string run_link = 13;
+
+  // Deployment Details: Deployment details for this ``model_version``.
+  repeated ModelVersionDeployment deployments = 16;
 }
 
 message CreateRegisteredModel {
@@ -781,6 +816,111 @@ message DeployModelVersion {
 
   optional string service_name = 4 [(validate_required) = true];
 
+  optional string cpu = 18;
+
+  optional string memory = 19;
+
+  optional string initial_delay = 20;
+
+  optional bool overwrite = 21 [default = false];
+
   message Response {
   }
+}
+
+
+message ModelVersionDeployment {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  optional string id = 1 [(validate_required) = true];
+
+  optional string enviroment = 2 [(validate_required) = true];
+
+  optional string service_name = 3 [(validate_required) = true];
+
+  optional string jira_id = 4;
+
+  optional string status = 5;
+
+  optional string creation_time = 6;
+
+  optional string last_updated_time = 7;
+
+  optional string message = 8;
+
+  optional string job_url = 16;
+
+  optional string helm_url = 17;
+
+  optional string cpu = 18;
+
+  optional string memory = 19;
+
+  optional string initial_delay = 20;
+
+  optional bool overwrite = 21 [default = false]; 
+
+}
+
+message CreateModelVersionDeployment {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  optional string id = 1 ;
+
+  optional string enviroment = 2 [(validate_required) = true];
+
+  optional string service_name = 3 [(validate_required) = true];
+
+  optional string jira_id = 4;
+
+  optional string status = 5;
+
+  optional string message = 8;
+
+  optional string name = 9 [(validate_required) = true];
+
+  // Model version number that the tag was logged under.
+  optional string version = 10 [(validate_required) = true];
+
+
+  optional string job_url = 16;
+
+  optional string cpu = 18;
+
+  optional string memory = 19;
+
+  optional string initial_delay = 20;
+
+  optional bool overwrite = 21 [default = false]; 
+
+  message Response {
+    optional ModelVersionDeployment model_version_deployment = 1;
+  }
+
+}
+
+
+message UpdateModelVersionDeployment {
+  option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
+
+  optional string id = 1 [(validate_required) = true];
+
+  optional string enviroment = 2 [(validate_required) = true];
+
+  optional string service_name = 3 [(validate_required) = true];
+
+  optional string jira_id = 4;
+
+  optional string status = 5;
+
+  optional string message = 8;
+
+  optional string job_url = 16;
+
+  optional string helm_url = 17;
+
+  message Response {
+    optional ModelVersionDeployment model_version_deployment = 1;
+  }
+
 }

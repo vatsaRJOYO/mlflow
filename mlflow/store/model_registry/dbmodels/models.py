@@ -10,6 +10,7 @@ from sqlalchemy import (
     ForeignKeyConstraint,
 )
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy.sql.sqltypes import Boolean
 
 from mlflow.entities.model_registry import (
     RegisteredModel,
@@ -109,6 +110,7 @@ class SqlModelVersion(Base):
             self.status_message,
             [tag.to_mlflow_entity() for tag in self.model_version_tags],
             self.run_link,
+            [deployment.to_mlflow_entity() for deployment in self.model_version_deployments]
         )
 
 
@@ -166,6 +168,64 @@ class SqlModelVersionTag(Base):
     def __repr__(self):
         return "<SqlModelVersionTag ({}, {}, {}, {})>".format(
             self.name, self.version, self.key, self.value
+        )
+
+    # entity mappers
+    def to_mlflow_entity(self):
+        return ModelVersionTag(self.key, self.value)
+
+class SqlModelVersionDeployment(Base):
+    __tablename__ = "model_version_deployments"
+
+    name = Column(String(256))
+
+    version = Column(Integer)
+
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+
+    environment = Column(String(32), nullable=False)
+
+    jira_id = Column(String(32), nullable=True)
+
+    status = Column(String(32))
+
+    creation_time = Column(BigInteger, default=lambda: int(time.time() * 1000))
+
+    last_updated_time = Column(BigInteger, nullable=True, default=None)
+
+    message = Column(String(), default='Deployment Entry Created')
+
+    job_url = Column(String())
+
+    helm_url = Column(String(256))
+
+    cpu = Column(String(16))
+
+    memory = Column(String(16))
+
+    initial_delay = Column(String(16))
+
+    overwrite = Column(Boolean, default=False)
+
+    # linked entities
+    model_version = relationship(
+        "SqlModelVersion",
+        foreign_keys=[name, version],
+        backref=backref("model_version_deployments", cascade="all"),
+    )
+
+    __table_args__ = (
+        PrimaryKeyConstraint("id", name="model_version_deployment_pk"),
+        ForeignKeyConstraint(
+            ("name", "version"),
+            ("model_versions.name", "model_versions.version"),
+            onupdate="cascade",
+        ),
+    )
+
+    def __repr__(self):
+        return "<SqlModelVersionDeployment ({}, {}, {})>".format(
+            self.id, self.name, self.version
         )
 
     # entity mappers

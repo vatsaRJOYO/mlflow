@@ -1,9 +1,12 @@
+from mlflow.entities.model_registry.model_version_deployment import ModelVersionDeployment
+from mlflow.azureml import deploy
 from mlflow.entities.model_registry._model_registry_entity import _ModelRegistryEntity
 from mlflow.entities.model_registry.model_version_tag import ModelVersionTag
 from mlflow.entities.model_registry.model_version_status import ModelVersionStatus
 from mlflow.protos.model_registry_pb2 import (
     ModelVersion as ProtoModelVersion,
     ModelVersionTag as ProtoModelVersionTag,
+    ModelVersionDeployment as ProtoModelVersionDeployment,
 )
 
 
@@ -27,6 +30,7 @@ class ModelVersion(_ModelRegistryEntity):
         status_message=None,
         tags=None,
         run_link=None,
+        deployments=None,
     ):
         super().__init__()
         self._name = name
@@ -42,6 +46,7 @@ class ModelVersion(_ModelRegistryEntity):
         self._status = status
         self._status_message = status_message
         self._tags = {tag.key: tag.value for tag in (tags or [])}
+        self._deployments = [] if deployments is None else deployments
 
     @property
     def name(self):
@@ -108,6 +113,10 @@ class ModelVersion(_ModelRegistryEntity):
     def tags(self):
         """Dictionary of tag key (string) -> tag value for the current model version."""
         return self._tags
+    
+    @property
+    def deployments(self):
+        return self._deployments
 
     @classmethod
     def _properties(cls):
@@ -116,6 +125,9 @@ class ModelVersion(_ModelRegistryEntity):
 
     def _add_tag(self, tag):
         self._tags[tag.key] = tag.value
+
+    def _set_deployments(self, deployments):
+        self._deployments = deployments
 
     # proto mappers
     @classmethod
@@ -138,6 +150,8 @@ class ModelVersion(_ModelRegistryEntity):
         )
         for tag in proto.tags:
             model_version._add_tag(ModelVersionTag.from_proto(tag))
+        deployments = [ ModelVersionDeployment.from_proto(deployment) for deployment in proto.deployments ]
+        model_version._set_deployments(deployments=deployments)
         return model_version
 
     def to_proto(self):
@@ -167,5 +181,8 @@ class ModelVersion(_ModelRegistryEntity):
             model_version.status_message = self.status_message
         model_version.tags.extend(
             [ProtoModelVersionTag(key=key, value=value) for key, value in self._tags.items()]
+        )
+        model_version.deployments.extend(
+            [ deployment.to_proto() for deployment in self._deployments ]
         )
         return model_version

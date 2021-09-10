@@ -12,8 +12,8 @@ class ModelVersionDeployment(_ModelRegistryEntity):
         service_name,
         jira_id=None,
         status=None,
-        creation_time=None,
-        last_updated_time=None,
+        creation_timestamp=None,
+        last_updated_timestamp=None,
         message=None,
         job_url=None,
         helm_url=None,
@@ -29,8 +29,8 @@ class ModelVersionDeployment(_ModelRegistryEntity):
         self._environment = environment
         self._jira_id = jira_id
         self._status = status
-        self._creation_time = creation_time
-        self._last_updated_time = last_updated_time
+        self._creation_timestamp = creation_timestamp
+        self._last_updated_timestamp = last_updated_timestamp
         self._message = message
         self._job_url = job_url
         self._helm_url = helm_url
@@ -61,12 +61,12 @@ class ModelVersionDeployment(_ModelRegistryEntity):
         return self._status
 
     @property
-    def creation_time(self):
-        return self._creation_time
+    def creation_timestamp(self):
+        return self._creation_timestamp
 
     @property
-    def last_updated_time(self):
-        return self._last_updated_time
+    def last_updated_timestamp(self):
+        return self._last_updated_timestamp
 
     @property
     def message(self):
@@ -116,13 +116,13 @@ class ModelVersionDeployment(_ModelRegistryEntity):
     def status(self, status):
         self._status = status
 
-    @creation_time.setter
-    def creation_time(self, creation_time):
-        self._creation_time = creation_time
+    @creation_timestamp.setter
+    def creation_timestamp(self, creation_time):
+        self._creation_timestamp = creation_time
 
-    @last_updated_time.setter
-    def last_updated_time(self, last_updated_time):
-        self._last_updated_time = last_updated_time
+    @last_updated_timestamp.setter
+    def last_updated_timestamp(self, last_updated_time):
+        self._last_updated_timestamp = last_updated_time
 
     @message.setter
     def message(self, message):
@@ -166,10 +166,10 @@ class ModelVersionDeployment(_ModelRegistryEntity):
             proto.id,
             proto.environment,
             proto.service_name,
-            proto.creation_time,
+            proto.creation_timestamp,
             proto.jira_id,
             proto.status,
-            proto.last_updated_time,
+            proto.last_updated_timestamp,
             proto.message,
             proto.job_url,
             proto.helm_url,
@@ -185,16 +185,16 @@ class ModelVersionDeployment(_ModelRegistryEntity):
         mvd = ProtoModelVersionDeployment()
         mvd.id = str(self.id)
         mvd.environment = self.environment
-        mvd.servive_name = self.service_name
-        mvd.creation_time = self.creation_time
+        mvd.service_name = self.service_name
+        mvd.creation_timestamp = self.creation_timestamp
 
 
         if self.jira_id is not None:
             mvd.jira_id = self.jira_id
         if self.status is not None:
             mvd.status = self.status
-        if self.last_updated_time is not None:
-            mvd.last_update_time = self.last_updated_time
+        if self.last_updated_timestamp is not None:
+            mvd.last_updated_timestamp = self.last_updated_timestamp
         if self.message is not None:
             mvd.message = self.message
         if self.job_url is not None:
@@ -209,6 +209,8 @@ class ModelVersionDeployment(_ModelRegistryEntity):
             mvd.initial_delay = self.initial_delay
         if self.overwrite is not None:
             mvd.overwrite = self.overwrite
+        
+        return mvd
 
 
 

@@ -334,7 +334,7 @@ service ModelRegistryService {
     };
   }
 
-    rpc updateModelVersionDeployment (ModelVersionDeployment) returns (ModelVersionDeployment) {
+    rpc updateModelVersionDeployment (UpdateModelVersionDeployment) returns (ModelVersionDeployment) {
     option (rpc) = {
       endpoints: [{
         method: "POST",
@@ -350,7 +350,7 @@ service ModelRegistryService {
     };
   }
 
-  rpc createModelVersionDeployment (ModelVersionDeployment) returns (ModelVersionDeployment) {
+  rpc createModelVersionDeployment (CreateModelVersionDeployment) returns (ModelVersionDeployment) {
     option (rpc) = {
       endpoints: [{
         method: "POST",
@@ -834,7 +834,7 @@ message ModelVersionDeployment {
 
   optional string id = 1 [(validate_required) = true];
 
-  optional string enviroment = 2 [(validate_required) = true];
+  optional string environment = 2 [(validate_required) = true];
 
   optional string service_name = 3 [(validate_required) = true];
 
@@ -842,9 +842,9 @@ message ModelVersionDeployment {
 
   optional string status = 5;
 
-  optional string creation_time = 6;
+  optional int64 creation_timestamp = 6;
 
-  optional string last_updated_time = 7;
+  optional int64 last_updated_timestamp = 7;
 
   optional string message = 8;
 
@@ -867,7 +867,7 @@ message CreateModelVersionDeployment {
 
   optional string id = 1 ;
 
-  optional string enviroment = 2 [(validate_required) = true];
+  optional string environment = 2 [(validate_required) = true];
 
   optional string service_name = 3 [(validate_required) = true];
 
@@ -881,7 +881,6 @@ message CreateModelVersionDeployment {
 
   // Model version number that the tag was logged under.
   optional string version = 10 [(validate_required) = true];
-
 
   optional string job_url = 16;
 
@@ -904,10 +903,6 @@ message UpdateModelVersionDeployment {
   option (scalapb.message).extends = "com.databricks.rpc.RPC[$this.Response]";
 
   optional string id = 1 [(validate_required) = true];
-
-  optional string enviroment = 2 [(validate_required) = true];
-
-  optional string service_name = 3 [(validate_required) = true];
 
   optional string jira_id = 4;
 

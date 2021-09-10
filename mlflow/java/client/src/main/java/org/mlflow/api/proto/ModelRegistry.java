@@ -41908,18 +41908,18 @@ public final class ModelRegistry {
         getIdBytes();
 
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    boolean hasEnviroment();
+    boolean hasEnvironment();
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    java.lang.String getEnviroment();
+    java.lang.String getEnvironment();
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
     com.google.protobuf.ByteString
-        getEnviromentBytes();
+        getEnvironmentBytes();
 
     /**
      * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
@@ -41964,32 +41964,22 @@ public final class ModelRegistry {
         getStatusBytes();
 
     /**
-     * <code>optional string creation_time = 6;</code>
+     * <code>optional int64 creation_timestamp = 6;</code>
      */
-    boolean hasCreationTime();
+    boolean hasCreationTimestamp();
     /**
-     * <code>optional string creation_time = 6;</code>
+     * <code>optional int64 creation_timestamp = 6;</code>
      */
-    java.lang.String getCreationTime();
-    /**
-     * <code>optional string creation_time = 6;</code>
-     */
-    com.google.protobuf.ByteString
-        getCreationTimeBytes();
+    long getCreationTimestamp();
 
     /**
-     * <code>optional string last_updated_time = 7;</code>
+     * <code>optional int64 last_updated_timestamp = 7;</code>
      */
-    boolean hasLastUpdatedTime();
+    boolean hasLastUpdatedTimestamp();
     /**
-     * <code>optional string last_updated_time = 7;</code>
+     * <code>optional int64 last_updated_timestamp = 7;</code>
      */
-    java.lang.String getLastUpdatedTime();
-    /**
-     * <code>optional string last_updated_time = 7;</code>
-     */
-    com.google.protobuf.ByteString
-        getLastUpdatedTimeBytes();
+    long getLastUpdatedTimestamp();
 
     /**
      * <code>optional string message = 8;</code>
@@ -42098,12 +42088,12 @@ public final class ModelRegistry {
     }
     private ModelVersionDeployment() {
       id_ = "";
-      enviroment_ = "";
+      environment_ = "";
       serviceName_ = "";
       jiraId_ = "";
       status_ = "";
-      creationTime_ = "";
-      lastUpdatedTime_ = "";
+      creationTimestamp_ = 0L;
+      lastUpdatedTimestamp_ = 0L;
       message_ = "";
       jobUrl_ = "";
       helmUrl_ = "";
@@ -42146,7 +42136,7 @@ public final class ModelRegistry {
             case 18: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              enviroment_ = bs;
+              environment_ = bs;
               break;
             }
             case 26: {
@@ -42167,16 +42157,14 @@ public final class ModelRegistry {
               status_ = bs;
               break;
             }
-            case 50: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 48: {
               bitField0_ |= 0x00000020;
-              creationTime_ = bs;
+              creationTimestamp_ = input.readInt64();
               break;
             }
-            case 58: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 56: {
               bitField0_ |= 0x00000040;
-              lastUpdatedTime_ = bs;
+              lastUpdatedTimestamp_ = input.readInt64();
               break;
             }
             case 66: {
@@ -42295,19 +42283,19 @@ public final class ModelRegistry {
       }
     }
 
-    public static final int ENVIROMENT_FIELD_NUMBER = 2;
-    private volatile java.lang.Object enviroment_;
+    public static final int ENVIRONMENT_FIELD_NUMBER = 2;
+    private volatile java.lang.Object environment_;
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    public boolean hasEnviroment() {
+    public boolean hasEnvironment() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    public java.lang.String getEnviroment() {
-      java.lang.Object ref = enviroment_;
+    public java.lang.String getEnvironment() {
+      java.lang.Object ref = environment_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
@@ -42315,22 +42303,22 @@ public final class ModelRegistry {
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
-          enviroment_ = s;
+          environment_ = s;
         }
         return s;
       }
     }
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
     public com.google.protobuf.ByteString
-        getEnviromentBytes() {
-      java.lang.Object ref = enviroment_;
+        getEnvironmentBytes() {
+      java.lang.Object ref = environment_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        enviroment_ = b;
+        environment_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -42463,88 +42451,34 @@ public final class ModelRegistry {
       }
     }
 
-    public static final int CREATION_TIME_FIELD_NUMBER = 6;
-    private volatile java.lang.Object creationTime_;
+    public static final int CREATION_TIMESTAMP_FIELD_NUMBER = 6;
+    private long creationTimestamp_;
     /**
-     * <code>optional string creation_time = 6;</code>
+     * <code>optional int64 creation_timestamp = 6;</code>
      */
-    public boolean hasCreationTime() {
+    public boolean hasCreationTimestamp() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional string creation_time = 6;</code>
+     * <code>optional int64 creation_timestamp = 6;</code>
      */
-    public java.lang.String getCreationTime() {
-      java.lang.Object ref = creationTime_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          creationTime_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>optional string creation_time = 6;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCreationTimeBytes() {
-      java.lang.Object ref = creationTime_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        creationTime_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getCreationTimestamp() {
+      return creationTimestamp_;
     }
 
-    public static final int LAST_UPDATED_TIME_FIELD_NUMBER = 7;
-    private volatile java.lang.Object lastUpdatedTime_;
+    public static final int LAST_UPDATED_TIMESTAMP_FIELD_NUMBER = 7;
+    private long lastUpdatedTimestamp_;
     /**
-     * <code>optional string last_updated_time = 7;</code>
+     * <code>optional int64 last_updated_timestamp = 7;</code>
      */
-    public boolean hasLastUpdatedTime() {
+    public boolean hasLastUpdatedTimestamp() {
       return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
-     * <code>optional string last_updated_time = 7;</code>
+     * <code>optional int64 last_updated_timestamp = 7;</code>
      */
-    public java.lang.String getLastUpdatedTime() {
-      java.lang.Object ref = lastUpdatedTime_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          lastUpdatedTime_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>optional string last_updated_time = 7;</code>
-     */
-    public com.google.protobuf.ByteString
-        getLastUpdatedTimeBytes() {
-      java.lang.Object ref = lastUpdatedTime_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        lastUpdatedTime_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getLastUpdatedTimestamp() {
+      return lastUpdatedTimestamp_;
     }
 
     public static final int MESSAGE_FIELD_NUMBER = 8;
@@ -42832,7 +42766,7 @@ public final class ModelRegistry {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, enviroment_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, environment_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, serviceName_);
@@ -42844,10 +42778,10 @@ public final class ModelRegistry {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, status_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, creationTime_);
+        output.writeInt64(6, creationTimestamp_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, lastUpdatedTime_);
+        output.writeInt64(7, lastUpdatedTimestamp_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 8, message_);
@@ -42883,7 +42817,7 @@ public final class ModelRegistry {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, enviroment_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, environment_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, serviceName_);
@@ -42895,10 +42829,12 @@ public final class ModelRegistry {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, status_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, creationTime_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, creationTimestamp_);
       }
       if (((bitField0_ & 0x00000040) == 0x00000040)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, lastUpdatedTime_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(7, lastUpdatedTimestamp_);
       }
       if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, message_);
@@ -42943,10 +42879,10 @@ public final class ModelRegistry {
         result = result && getId()
             .equals(other.getId());
       }
-      result = result && (hasEnviroment() == other.hasEnviroment());
-      if (hasEnviroment()) {
-        result = result && getEnviroment()
-            .equals(other.getEnviroment());
+      result = result && (hasEnvironment() == other.hasEnvironment());
+      if (hasEnvironment()) {
+        result = result && getEnvironment()
+            .equals(other.getEnvironment());
       }
       result = result && (hasServiceName() == other.hasServiceName());
       if (hasServiceName()) {
@@ -42963,15 +42899,15 @@ public final class ModelRegistry {
         result = result && getStatus()
             .equals(other.getStatus());
       }
-      result = result && (hasCreationTime() == other.hasCreationTime());
-      if (hasCreationTime()) {
-        result = result && getCreationTime()
-            .equals(other.getCreationTime());
+      result = result && (hasCreationTimestamp() == other.hasCreationTimestamp());
+      if (hasCreationTimestamp()) {
+        result = result && (getCreationTimestamp()
+            == other.getCreationTimestamp());
       }
-      result = result && (hasLastUpdatedTime() == other.hasLastUpdatedTime());
-      if (hasLastUpdatedTime()) {
-        result = result && getLastUpdatedTime()
-            .equals(other.getLastUpdatedTime());
+      result = result && (hasLastUpdatedTimestamp() == other.hasLastUpdatedTimestamp());
+      if (hasLastUpdatedTimestamp()) {
+        result = result && (getLastUpdatedTimestamp()
+            == other.getLastUpdatedTimestamp());
       }
       result = result && (hasMessage() == other.hasMessage());
       if (hasMessage()) {
@@ -43023,9 +42959,9 @@ public final class ModelRegistry {
         hash = (37 * hash) + ID_FIELD_NUMBER;
         hash = (53 * hash) + getId().hashCode();
       }
-      if (hasEnviroment()) {
-        hash = (37 * hash) + ENVIROMENT_FIELD_NUMBER;
-        hash = (53 * hash) + getEnviroment().hashCode();
+      if (hasEnvironment()) {
+        hash = (37 * hash) + ENVIRONMENT_FIELD_NUMBER;
+        hash = (53 * hash) + getEnvironment().hashCode();
       }
       if (hasServiceName()) {
         hash = (37 * hash) + SERVICE_NAME_FIELD_NUMBER;
@@ -43039,13 +42975,15 @@ public final class ModelRegistry {
         hash = (37 * hash) + STATUS_FIELD_NUMBER;
         hash = (53 * hash) + getStatus().hashCode();
       }
-      if (hasCreationTime()) {
-        hash = (37 * hash) + CREATION_TIME_FIELD_NUMBER;
-        hash = (53 * hash) + getCreationTime().hashCode();
+      if (hasCreationTimestamp()) {
+        hash = (37 * hash) + CREATION_TIMESTAMP_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getCreationTimestamp());
       }
-      if (hasLastUpdatedTime()) {
-        hash = (37 * hash) + LAST_UPDATED_TIME_FIELD_NUMBER;
-        hash = (53 * hash) + getLastUpdatedTime().hashCode();
+      if (hasLastUpdatedTimestamp()) {
+        hash = (37 * hash) + LAST_UPDATED_TIMESTAMP_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getLastUpdatedTimestamp());
       }
       if (hasMessage()) {
         hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
@@ -43211,7 +43149,7 @@ public final class ModelRegistry {
         super.clear();
         id_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        enviroment_ = "";
+        environment_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
         serviceName_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -43219,9 +43157,9 @@ public final class ModelRegistry {
         bitField0_ = (bitField0_ & ~0x00000008);
         status_ = "";
         bitField0_ = (bitField0_ & ~0x00000010);
-        creationTime_ = "";
+        creationTimestamp_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000020);
-        lastUpdatedTime_ = "";
+        lastUpdatedTimestamp_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000040);
         message_ = "";
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -43272,7 +43210,7 @@ public final class ModelRegistry {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.enviroment_ = enviroment_;
+        result.environment_ = environment_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
@@ -43288,11 +43226,11 @@ public final class ModelRegistry {
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
-        result.creationTime_ = creationTime_;
+        result.creationTimestamp_ = creationTimestamp_;
         if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
-        result.lastUpdatedTime_ = lastUpdatedTime_;
+        result.lastUpdatedTimestamp_ = lastUpdatedTimestamp_;
         if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
         }
@@ -43375,9 +43313,9 @@ public final class ModelRegistry {
           id_ = other.id_;
           onChanged();
         }
-        if (other.hasEnviroment()) {
+        if (other.hasEnvironment()) {
           bitField0_ |= 0x00000002;
-          enviroment_ = other.enviroment_;
+          environment_ = other.environment_;
           onChanged();
         }
         if (other.hasServiceName()) {
@@ -43395,15 +43333,11 @@ public final class ModelRegistry {
           status_ = other.status_;
           onChanged();
         }
-        if (other.hasCreationTime()) {
-          bitField0_ |= 0x00000020;
-          creationTime_ = other.creationTime_;
-          onChanged();
+        if (other.hasCreationTimestamp()) {
+          setCreationTimestamp(other.getCreationTimestamp());
         }
-        if (other.hasLastUpdatedTime()) {
-          bitField0_ |= 0x00000040;
-          lastUpdatedTime_ = other.lastUpdatedTime_;
-          onChanged();
+        if (other.hasLastUpdatedTimestamp()) {
+          setLastUpdatedTimestamp(other.getLastUpdatedTimestamp());
         }
         if (other.hasMessage()) {
           bitField0_ |= 0x00000080;
@@ -43544,24 +43478,24 @@ public final class ModelRegistry {
         return this;
       }
 
-      private java.lang.Object enviroment_ = "";
+      private java.lang.Object environment_ = "";
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public boolean hasEnviroment() {
+      public boolean hasEnvironment() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public java.lang.String getEnviroment() {
-        java.lang.Object ref = enviroment_;
+      public java.lang.String getEnvironment() {
+        java.lang.Object ref = environment_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
-            enviroment_ = s;
+            environment_ = s;
           }
           return s;
         } else {
@@ -43569,53 +43503,53 @@ public final class ModelRegistry {
         }
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
       public com.google.protobuf.ByteString
-          getEnviromentBytes() {
-        java.lang.Object ref = enviroment_;
+          getEnvironmentBytes() {
+        java.lang.Object ref = environment_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          enviroment_ = b;
+          environment_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public Builder setEnviroment(
+      public Builder setEnvironment(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000002;
-        enviroment_ = value;
+        environment_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public Builder clearEnviroment() {
+      public Builder clearEnvironment() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        enviroment_ = getDefaultInstance().getEnviroment();
+        environment_ = getDefaultInstance().getEnvironment();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public Builder setEnviromentBytes(
+      public Builder setEnvironmentBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000002;
-        enviroment_ = value;
+        environment_ = value;
         onChanged();
         return this;
       }
@@ -43848,154 +43782,66 @@ public final class ModelRegistry {
         return this;
       }
 
-      private java.lang.Object creationTime_ = "";
+      private long creationTimestamp_ ;
       /**
-       * <code>optional string creation_time = 6;</code>
+       * <code>optional int64 creation_timestamp = 6;</code>
        */
-      public boolean hasCreationTime() {
+      public boolean hasCreationTimestamp() {
         return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional string creation_time = 6;</code>
+       * <code>optional int64 creation_timestamp = 6;</code>
        */
-      public java.lang.String getCreationTime() {
-        java.lang.Object ref = creationTime_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            creationTime_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getCreationTimestamp() {
+        return creationTimestamp_;
       }
       /**
-       * <code>optional string creation_time = 6;</code>
+       * <code>optional int64 creation_timestamp = 6;</code>
        */
-      public com.google.protobuf.ByteString
-          getCreationTimeBytes() {
-        java.lang.Object ref = creationTime_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          creationTime_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string creation_time = 6;</code>
-       */
-      public Builder setCreationTime(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000020;
-        creationTime_ = value;
+      public Builder setCreationTimestamp(long value) {
+        bitField0_ |= 0x00000020;
+        creationTimestamp_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string creation_time = 6;</code>
+       * <code>optional int64 creation_timestamp = 6;</code>
        */
-      public Builder clearCreationTime() {
+      public Builder clearCreationTimestamp() {
         bitField0_ = (bitField0_ & ~0x00000020);
-        creationTime_ = getDefaultInstance().getCreationTime();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string creation_time = 6;</code>
-       */
-      public Builder setCreationTimeBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000020;
-        creationTime_ = value;
+        creationTimestamp_ = 0L;
         onChanged();
         return this;
       }
 
-      private java.lang.Object lastUpdatedTime_ = "";
+      private long lastUpdatedTimestamp_ ;
       /**
-       * <code>optional string last_updated_time = 7;</code>
+       * <code>optional int64 last_updated_timestamp = 7;</code>
        */
-      public boolean hasLastUpdatedTime() {
+      public boolean hasLastUpdatedTimestamp() {
         return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
-       * <code>optional string last_updated_time = 7;</code>
+       * <code>optional int64 last_updated_timestamp = 7;</code>
        */
-      public java.lang.String getLastUpdatedTime() {
-        java.lang.Object ref = lastUpdatedTime_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            lastUpdatedTime_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getLastUpdatedTimestamp() {
+        return lastUpdatedTimestamp_;
       }
       /**
-       * <code>optional string last_updated_time = 7;</code>
+       * <code>optional int64 last_updated_timestamp = 7;</code>
        */
-      public com.google.protobuf.ByteString
-          getLastUpdatedTimeBytes() {
-        java.lang.Object ref = lastUpdatedTime_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          lastUpdatedTime_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string last_updated_time = 7;</code>
-       */
-      public Builder setLastUpdatedTime(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000040;
-        lastUpdatedTime_ = value;
+      public Builder setLastUpdatedTimestamp(long value) {
+        bitField0_ |= 0x00000040;
+        lastUpdatedTimestamp_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string last_updated_time = 7;</code>
+       * <code>optional int64 last_updated_timestamp = 7;</code>
        */
-      public Builder clearLastUpdatedTime() {
+      public Builder clearLastUpdatedTimestamp() {
         bitField0_ = (bitField0_ & ~0x00000040);
-        lastUpdatedTime_ = getDefaultInstance().getLastUpdatedTime();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string last_updated_time = 7;</code>
-       */
-      public Builder setLastUpdatedTimeBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000040;
-        lastUpdatedTime_ = value;
+        lastUpdatedTimestamp_ = 0L;
         onChanged();
         return this;
       }
@@ -44559,18 +44405,18 @@ public final class ModelRegistry {
         getIdBytes();
 
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    boolean hasEnviroment();
+    boolean hasEnvironment();
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    java.lang.String getEnviroment();
+    java.lang.String getEnvironment();
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
     com.google.protobuf.ByteString
-        getEnviromentBytes();
+        getEnvironmentBytes();
 
     /**
      * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
@@ -44747,7 +44593,7 @@ public final class ModelRegistry {
     }
     private CreateModelVersionDeployment() {
       id_ = "";
-      enviroment_ = "";
+      environment_ = "";
       serviceName_ = "";
       jiraId_ = "";
       status_ = "";
@@ -44794,7 +44640,7 @@ public final class ModelRegistry {
             case 18: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              enviroment_ = bs;
+              environment_ = bs;
               break;
             }
             case 26: {
@@ -45554,19 +45400,19 @@ public final class ModelRegistry {
       }
     }
 
-    public static final int ENVIROMENT_FIELD_NUMBER = 2;
-    private volatile java.lang.Object enviroment_;
+    public static final int ENVIRONMENT_FIELD_NUMBER = 2;
+    private volatile java.lang.Object environment_;
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    public boolean hasEnviroment() {
+    public boolean hasEnvironment() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
-    public java.lang.String getEnviroment() {
-      java.lang.Object ref = enviroment_;
+    public java.lang.String getEnvironment() {
+      java.lang.Object ref = environment_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
@@ -45574,22 +45420,22 @@ public final class ModelRegistry {
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
-          enviroment_ = s;
+          environment_ = s;
         }
         return s;
       }
     }
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+     * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
      */
     public com.google.protobuf.ByteString
-        getEnviromentBytes() {
-      java.lang.Object ref = enviroment_;
+        getEnvironmentBytes() {
+      java.lang.Object ref = environment_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        enviroment_ = b;
+        environment_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -46061,7 +45907,7 @@ public final class ModelRegistry {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, enviroment_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, environment_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, serviceName_);
@@ -46109,7 +45955,7 @@ public final class ModelRegistry {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, enviroment_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, environment_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, serviceName_);
@@ -46166,10 +46012,10 @@ public final class ModelRegistry {
         result = result && getId()
             .equals(other.getId());
       }
-      result = result && (hasEnviroment() == other.hasEnviroment());
-      if (hasEnviroment()) {
-        result = result && getEnviroment()
-            .equals(other.getEnviroment());
+      result = result && (hasEnvironment() == other.hasEnvironment());
+      if (hasEnvironment()) {
+        result = result && getEnvironment()
+            .equals(other.getEnvironment());
       }
       result = result && (hasServiceName() == other.hasServiceName());
       if (hasServiceName()) {
@@ -46241,9 +46087,9 @@ public final class ModelRegistry {
         hash = (37 * hash) + ID_FIELD_NUMBER;
         hash = (53 * hash) + getId().hashCode();
       }
-      if (hasEnviroment()) {
-        hash = (37 * hash) + ENVIROMENT_FIELD_NUMBER;
-        hash = (53 * hash) + getEnviroment().hashCode();
+      if (hasEnvironment()) {
+        hash = (37 * hash) + ENVIRONMENT_FIELD_NUMBER;
+        hash = (53 * hash) + getEnvironment().hashCode();
       }
       if (hasServiceName()) {
         hash = (37 * hash) + SERVICE_NAME_FIELD_NUMBER;
@@ -46425,7 +46271,7 @@ public final class ModelRegistry {
         super.clear();
         id_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        enviroment_ = "";
+        environment_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
         serviceName_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -46484,7 +46330,7 @@ public final class ModelRegistry {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.enviroment_ = enviroment_;
+        result.environment_ = environment_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
@@ -46583,9 +46429,9 @@ public final class ModelRegistry {
           id_ = other.id_;
           onChanged();
         }
-        if (other.hasEnviroment()) {
+        if (other.hasEnvironment()) {
           bitField0_ |= 0x00000002;
-          enviroment_ = other.enviroment_;
+          environment_ = other.environment_;
           onChanged();
         }
         if (other.hasServiceName()) {
@@ -46747,24 +46593,24 @@ public final class ModelRegistry {
         return this;
       }
 
-      private java.lang.Object enviroment_ = "";
+      private java.lang.Object environment_ = "";
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public boolean hasEnviroment() {
+      public boolean hasEnvironment() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public java.lang.String getEnviroment() {
-        java.lang.Object ref = enviroment_;
+      public java.lang.String getEnvironment() {
+        java.lang.Object ref = environment_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
-            enviroment_ = s;
+            environment_ = s;
           }
           return s;
         } else {
@@ -46772,53 +46618,53 @@ public final class ModelRegistry {
         }
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
       public com.google.protobuf.ByteString
-          getEnviromentBytes() {
-        java.lang.Object ref = enviroment_;
+          getEnvironmentBytes() {
+        java.lang.Object ref = environment_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          enviroment_ = b;
+          environment_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public Builder setEnviroment(
+      public Builder setEnvironment(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000002;
-        enviroment_ = value;
+        environment_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public Builder clearEnviroment() {
+      public Builder clearEnvironment() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        enviroment_ = getDefaultInstance().getEnviroment();
+        environment_ = getDefaultInstance().getEnvironment();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
+       * <code>optional string environment = 2 [(.mlflow.validate_required) = true];</code>
        */
-      public Builder setEnviromentBytes(
+      public Builder setEnvironmentBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000002;
-        enviroment_ = value;
+        environment_ = value;
         onChanged();
         return this;
       }
@@ -47710,34 +47556,6 @@ public final class ModelRegistry {
         getIdBytes();
 
     /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-     */
-    boolean hasEnviroment();
-    /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-     */
-    java.lang.String getEnviroment();
-    /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-     */
-    com.google.protobuf.ByteString
-        getEnviromentBytes();
-
-    /**
-     * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-     */
-    boolean hasServiceName();
-    /**
-     * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-     */
-    java.lang.String getServiceName();
-    /**
-     * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-     */
-    com.google.protobuf.ByteString
-        getServiceNameBytes();
-
-    /**
      * <code>optional string jira_id = 4;</code>
      */
     boolean hasJiraId();
@@ -47821,8 +47639,6 @@ public final class ModelRegistry {
     }
     private UpdateModelVersionDeployment() {
       id_ = "";
-      enviroment_ = "";
-      serviceName_ = "";
       jiraId_ = "";
       status_ = "";
       message_ = "";
@@ -47860,45 +47676,33 @@ public final class ModelRegistry {
               id_ = bs;
               break;
             }
-            case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000002;
-              enviroment_ = bs;
-              break;
-            }
-            case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000004;
-              serviceName_ = bs;
-              break;
-            }
             case 34: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000002;
               jiraId_ = bs;
               break;
             }
             case 42: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000010;
+              bitField0_ |= 0x00000004;
               status_ = bs;
               break;
             }
             case 66: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000020;
+              bitField0_ |= 0x00000008;
               message_ = bs;
               break;
             }
             case 130: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000040;
+              bitField0_ |= 0x00000010;
               jobUrl_ = bs;
               break;
             }
             case 138: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000080;
+              bitField0_ |= 0x00000020;
               helmUrl_ = bs;
               break;
             }
@@ -48594,97 +48398,13 @@ public final class ModelRegistry {
       }
     }
 
-    public static final int ENVIROMENT_FIELD_NUMBER = 2;
-    private volatile java.lang.Object enviroment_;
-    /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-     */
-    public boolean hasEnviroment() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-     */
-    public java.lang.String getEnviroment() {
-      java.lang.Object ref = enviroment_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          enviroment_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-     */
-    public com.google.protobuf.ByteString
-        getEnviromentBytes() {
-      java.lang.Object ref = enviroment_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        enviroment_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int SERVICE_NAME_FIELD_NUMBER = 3;
-    private volatile java.lang.Object serviceName_;
-    /**
-     * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-     */
-    public boolean hasServiceName() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-     */
-    public java.lang.String getServiceName() {
-      java.lang.Object ref = serviceName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          serviceName_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-     */
-    public com.google.protobuf.ByteString
-        getServiceNameBytes() {
-      java.lang.Object ref = serviceName_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        serviceName_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
     public static final int JIRA_ID_FIELD_NUMBER = 4;
     private volatile java.lang.Object jiraId_;
     /**
      * <code>optional string jira_id = 4;</code>
      */
     public boolean hasJiraId() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>optional string jira_id = 4;</code>
@@ -48726,7 +48446,7 @@ public final class ModelRegistry {
      * <code>optional string status = 5;</code>
      */
     public boolean hasStatus() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional string status = 5;</code>
@@ -48768,7 +48488,7 @@ public final class ModelRegistry {
      * <code>optional string message = 8;</code>
      */
     public boolean hasMessage() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional string message = 8;</code>
@@ -48810,7 +48530,7 @@ public final class ModelRegistry {
      * <code>optional string job_url = 16;</code>
      */
     public boolean hasJobUrl() {
-      return ((bitField0_ & 0x00000040) == 0x00000040);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional string job_url = 16;</code>
@@ -48852,7 +48572,7 @@ public final class ModelRegistry {
      * <code>optional string helm_url = 17;</code>
      */
     public boolean hasHelmUrl() {
-      return ((bitField0_ & 0x00000080) == 0x00000080);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional string helm_url = 17;</code>
@@ -48906,24 +48626,18 @@ public final class ModelRegistry {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, enviroment_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, serviceName_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, jiraId_);
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, status_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 8, message_);
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 16, jobUrl_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 17, helmUrl_);
       }
       unknownFields.writeTo(output);
@@ -48939,24 +48653,18 @@ public final class ModelRegistry {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, enviroment_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, serviceName_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, jiraId_);
       }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, status_);
       }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, message_);
       }
-      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(16, jobUrl_);
       }
-      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(17, helmUrl_);
       }
       size += unknownFields.getSerializedSize();
@@ -48979,16 +48687,6 @@ public final class ModelRegistry {
       if (hasId()) {
         result = result && getId()
             .equals(other.getId());
-      }
-      result = result && (hasEnviroment() == other.hasEnviroment());
-      if (hasEnviroment()) {
-        result = result && getEnviroment()
-            .equals(other.getEnviroment());
-      }
-      result = result && (hasServiceName() == other.hasServiceName());
-      if (hasServiceName()) {
-        result = result && getServiceName()
-            .equals(other.getServiceName());
       }
       result = result && (hasJiraId() == other.hasJiraId());
       if (hasJiraId()) {
@@ -49029,14 +48727,6 @@ public final class ModelRegistry {
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
         hash = (53 * hash) + getId().hashCode();
-      }
-      if (hasEnviroment()) {
-        hash = (37 * hash) + ENVIROMENT_FIELD_NUMBER;
-        hash = (53 * hash) + getEnviroment().hashCode();
-      }
-      if (hasServiceName()) {
-        hash = (37 * hash) + SERVICE_NAME_FIELD_NUMBER;
-        hash = (53 * hash) + getServiceName().hashCode();
       }
       if (hasJiraId()) {
         hash = (37 * hash) + JIRA_ID_FIELD_NUMBER;
@@ -49193,20 +48883,16 @@ public final class ModelRegistry {
         super.clear();
         id_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        enviroment_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
-        serviceName_ = "";
-        bitField0_ = (bitField0_ & ~0x00000004);
         jiraId_ = "";
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000002);
         status_ = "";
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000004);
         message_ = "";
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000008);
         jobUrl_ = "";
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000010);
         helmUrl_ = "";
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -49242,29 +48928,21 @@ public final class ModelRegistry {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.enviroment_ = enviroment_;
+        result.jiraId_ = jiraId_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.serviceName_ = serviceName_;
+        result.status_ = status_;
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.jiraId_ = jiraId_;
+        result.message_ = message_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
-        result.status_ = status_;
+        result.jobUrl_ = jobUrl_;
         if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
-        }
-        result.message_ = message_;
-        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
-          to_bitField0_ |= 0x00000040;
-        }
-        result.jobUrl_ = jobUrl_;
-        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
-          to_bitField0_ |= 0x00000080;
         }
         result.helmUrl_ = helmUrl_;
         result.bitField0_ = to_bitField0_;
@@ -49321,38 +48999,28 @@ public final class ModelRegistry {
           id_ = other.id_;
           onChanged();
         }
-        if (other.hasEnviroment()) {
-          bitField0_ |= 0x00000002;
-          enviroment_ = other.enviroment_;
-          onChanged();
-        }
-        if (other.hasServiceName()) {
-          bitField0_ |= 0x00000004;
-          serviceName_ = other.serviceName_;
-          onChanged();
-        }
         if (other.hasJiraId()) {
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000002;
           jiraId_ = other.jiraId_;
           onChanged();
         }
         if (other.hasStatus()) {
-          bitField0_ |= 0x00000010;
+          bitField0_ |= 0x00000004;
           status_ = other.status_;
           onChanged();
         }
         if (other.hasMessage()) {
-          bitField0_ |= 0x00000020;
+          bitField0_ |= 0x00000008;
           message_ = other.message_;
           onChanged();
         }
         if (other.hasJobUrl()) {
-          bitField0_ |= 0x00000040;
+          bitField0_ |= 0x00000010;
           jobUrl_ = other.jobUrl_;
           onChanged();
         }
         if (other.hasHelmUrl()) {
-          bitField0_ |= 0x00000080;
+          bitField0_ |= 0x00000020;
           helmUrl_ = other.helmUrl_;
           onChanged();
         }
@@ -49462,164 +49130,12 @@ public final class ModelRegistry {
         return this;
       }
 
-      private java.lang.Object enviroment_ = "";
-      /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-       */
-      public boolean hasEnviroment() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-       */
-      public java.lang.String getEnviroment() {
-        java.lang.Object ref = enviroment_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            enviroment_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-       */
-      public com.google.protobuf.ByteString
-          getEnviromentBytes() {
-        java.lang.Object ref = enviroment_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          enviroment_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-       */
-      public Builder setEnviroment(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        enviroment_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-       */
-      public Builder clearEnviroment() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        enviroment_ = getDefaultInstance().getEnviroment();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string enviroment = 2 [(.mlflow.validate_required) = true];</code>
-       */
-      public Builder setEnviromentBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        enviroment_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object serviceName_ = "";
-      /**
-       * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-       */
-      public boolean hasServiceName() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-       */
-      public java.lang.String getServiceName() {
-        java.lang.Object ref = serviceName_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            serviceName_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-       */
-      public com.google.protobuf.ByteString
-          getServiceNameBytes() {
-        java.lang.Object ref = serviceName_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          serviceName_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-       */
-      public Builder setServiceName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-        serviceName_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-       */
-      public Builder clearServiceName() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        serviceName_ = getDefaultInstance().getServiceName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string service_name = 3 [(.mlflow.validate_required) = true];</code>
-       */
-      public Builder setServiceNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-        serviceName_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object jiraId_ = "";
       /**
        * <code>optional string jira_id = 4;</code>
        */
       public boolean hasJiraId() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>optional string jira_id = 4;</code>
@@ -49662,7 +49178,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000002;
         jiraId_ = value;
         onChanged();
         return this;
@@ -49671,7 +49187,7 @@ public final class ModelRegistry {
        * <code>optional string jira_id = 4;</code>
        */
       public Builder clearJiraId() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000002);
         jiraId_ = getDefaultInstance().getJiraId();
         onChanged();
         return this;
@@ -49684,7 +49200,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000002;
         jiraId_ = value;
         onChanged();
         return this;
@@ -49695,7 +49211,7 @@ public final class ModelRegistry {
        * <code>optional string status = 5;</code>
        */
       public boolean hasStatus() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional string status = 5;</code>
@@ -49738,7 +49254,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000010;
+  bitField0_ |= 0x00000004;
         status_ = value;
         onChanged();
         return this;
@@ -49747,7 +49263,7 @@ public final class ModelRegistry {
        * <code>optional string status = 5;</code>
        */
       public Builder clearStatus() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000004);
         status_ = getDefaultInstance().getStatus();
         onChanged();
         return this;
@@ -49760,7 +49276,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000010;
+  bitField0_ |= 0x00000004;
         status_ = value;
         onChanged();
         return this;
@@ -49771,7 +49287,7 @@ public final class ModelRegistry {
        * <code>optional string message = 8;</code>
        */
       public boolean hasMessage() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional string message = 8;</code>
@@ -49814,7 +49330,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000008;
         message_ = value;
         onChanged();
         return this;
@@ -49823,7 +49339,7 @@ public final class ModelRegistry {
        * <code>optional string message = 8;</code>
        */
       public Builder clearMessage() {
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000008);
         message_ = getDefaultInstance().getMessage();
         onChanged();
         return this;
@@ -49836,7 +49352,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000020;
+  bitField0_ |= 0x00000008;
         message_ = value;
         onChanged();
         return this;
@@ -49847,7 +49363,7 @@ public final class ModelRegistry {
        * <code>optional string job_url = 16;</code>
        */
       public boolean hasJobUrl() {
-        return ((bitField0_ & 0x00000040) == 0x00000040);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>optional string job_url = 16;</code>
@@ -49890,7 +49406,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000040;
+  bitField0_ |= 0x00000010;
         jobUrl_ = value;
         onChanged();
         return this;
@@ -49899,7 +49415,7 @@ public final class ModelRegistry {
        * <code>optional string job_url = 16;</code>
        */
       public Builder clearJobUrl() {
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000010);
         jobUrl_ = getDefaultInstance().getJobUrl();
         onChanged();
         return this;
@@ -49912,7 +49428,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000040;
+  bitField0_ |= 0x00000010;
         jobUrl_ = value;
         onChanged();
         return this;
@@ -49923,7 +49439,7 @@ public final class ModelRegistry {
        * <code>optional string helm_url = 17;</code>
        */
       public boolean hasHelmUrl() {
-        return ((bitField0_ & 0x00000080) == 0x00000080);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>optional string helm_url = 17;</code>
@@ -49966,7 +49482,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000080;
+  bitField0_ |= 0x00000020;
         helmUrl_ = value;
         onChanged();
         return this;
@@ -49975,7 +49491,7 @@ public final class ModelRegistry {
        * <code>optional string helm_url = 17;</code>
        */
       public Builder clearHelmUrl() {
-        bitField0_ = (bitField0_ & ~0x00000080);
+        bitField0_ = (bitField0_ & ~0x00000020);
         helmUrl_ = getDefaultInstance().getHelmUrl();
         onChanged();
         return this;
@@ -49988,7 +49504,7 @@ public final class ModelRegistry {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000080;
+  bitField0_ |= 0x00000020;
         helmUrl_ = value;
         onChanged();
         return this;
@@ -50409,168 +49925,167 @@ public final class ModelRegistry {
       "\022\013\n\003cpu\030\022 \001(\t\022\016\n\006memory\030\023 \001(\t\022\025\n\rinitial" +
       "_delay\030\024 \001(\t\022\030\n\toverwrite\030\025 \001(\010:\005false\032\n" +
       "\n\010Response:+\342?(\n&com.databricks.rpc.RPC[" +
-      "$this.Response]\"\342\002\n\026ModelVersionDeployme" +
-      "nt\022\020\n\002id\030\001 \001(\tB\004\370\206\031\001\022\030\n\nenviroment\030\002 \001(\t" +
-      "B\004\370\206\031\001\022\032\n\014service_name\030\003 \001(\tB\004\370\206\031\001\022\017\n\007ji" +
-      "ra_id\030\004 \001(\t\022\016\n\006status\030\005 \001(\t\022\025\n\rcreation_" +
-      "time\030\006 \001(\t\022\031\n\021last_updated_time\030\007 \001(\t\022\017\n" +
-      "\007message\030\010 \001(\t\022\017\n\007job_url\030\020 \001(\t\022\020\n\010helm_" +
-      "url\030\021 \001(\t\022\013\n\003cpu\030\022 \001(\t\022\016\n\006memory\030\023 \001(\t\022\025" +
-      "\n\rinitial_delay\030\024 \001(\t\022\030\n\toverwrite\030\025 \001(\010" +
-      ":\005false:+\342?(\n&com.databricks.rpc.RPC[$th" +
-      "is.Response]\"\227\003\n\034CreateModelVersionDeplo" +
-      "yment\022\n\n\002id\030\001 \001(\t\022\030\n\nenviroment\030\002 \001(\tB\004\370" +
-      "\206\031\001\022\032\n\014service_name\030\003 \001(\tB\004\370\206\031\001\022\017\n\007jira_" +
-      "id\030\004 \001(\t\022\016\n\006status\030\005 \001(\t\022\017\n\007message\030\010 \001(" +
-      "\t\022\022\n\004name\030\t \001(\tB\004\370\206\031\001\022\025\n\007version\030\n \001(\tB\004" +
-      "\370\206\031\001\022\017\n\007job_url\030\020 \001(\t\022\013\n\003cpu\030\022 \001(\t\022\016\n\006me" +
-      "mory\030\023 \001(\t\022\025\n\rinitial_delay\030\024 \001(\t\022\030\n\tove" +
-      "rwrite\030\025 \001(\010:\005false\032L\n\010Response\022@\n\030model" +
-      "_version_deployment\030\001 \001(\0132\036.mlflow.Model" +
-      "VersionDeployment:+\342?(\n&com.databricks.r" +
-      "pc.RPC[$this.Response]\"\266\002\n\034UpdateModelVe" +
-      "rsionDeployment\022\020\n\002id\030\001 \001(\tB\004\370\206\031\001\022\030\n\nenv" +
-      "iroment\030\002 \001(\tB\004\370\206\031\001\022\032\n\014service_name\030\003 \001(" +
-      "\tB\004\370\206\031\001\022\017\n\007jira_id\030\004 \001(\t\022\016\n\006status\030\005 \001(\t" +
-      "\022\017\n\007message\030\010 \001(\t\022\017\n\007job_url\030\020 \001(\t\022\020\n\010he" +
-      "lm_url\030\021 \001(\t\032L\n\010Response\022@\n\030model_versio" +
-      "n_deployment\030\001 \001(\0132\036.mlflow.ModelVersion" +
-      "Deployment:+\342?(\n&com.databricks.rpc.RPC[" +
-      "$this.Response]*R\n\022ModelVersionStatus\022\030\n" +
-      "\024PENDING_REGISTRATION\020\001\022\027\n\023FAILED_REGIST" +
-      "RATION\020\002\022\t\n\005READY\020\0032\360(\n\024ModelRegistrySer" +
-      "vice\022\350\001\n\025createRegisteredModel\022\035.mlflow." +
-      "CreateRegisteredModel\032&.mlflow.CreateReg" +
-      "isteredModel.Response\"\207\001\362\206\031\202\001\n6\n\004POST\022(/" +
-      "preview/mlflow/registered-models/create\032" +
-      "\004\010\002\020\000\n.\n\004POST\022 /mlflow/registered-models" +
-      "/create\032\004\010\002\020\000\020\001*\026Create RegisteredModel\022" +
-      "\350\001\n\025renameRegisteredModel\022\035.mlflow.Renam" +
-      "eRegisteredModel\032&.mlflow.RenameRegister" +
-      "edModel.Response\"\207\001\362\206\031\202\001\n6\n\004POST\022(/previ" +
-      "ew/mlflow/registered-models/rename\032\004\010\002\020\000" +
-      "\n.\n\004POST\022 /mlflow/registered-models/rena" +
-      "me\032\004\010\002\020\000\020\001*\026Rename RegisteredModel\022\352\001\n\025u" +
-      "pdateRegisteredModel\022\035.mlflow.UpdateRegi" +
-      "steredModel\032&.mlflow.UpdateRegisteredMod" +
-      "el.Response\"\211\001\362\206\031\204\001\n7\n\005PATCH\022(/preview/m" +
-      "lflow/registered-models/update\032\004\010\002\020\000\n/\n\005" +
-      "PATCH\022 /mlflow/registered-models/update\032" +
-      "\004\010\002\020\000\020\001*\026Update RegisteredModel\022\354\001\n\025dele" +
-      "teRegisteredModel\022\035.mlflow.DeleteRegiste" +
-      "redModel\032&.mlflow.DeleteRegisteredModel." +
-      "Response\"\213\001\362\206\031\206\001\n8\n\006DELETE\022(/preview/mlf" +
-      "low/registered-models/delete\032\004\010\002\020\000\n0\n\006DE" +
-      "LETE\022 /mlflow/registered-models/delete\032\004" +
-      "\010\002\020\000\020\001*\026Delete RegisteredModel\022\322\001\n\022getRe" +
-      "gisteredModel\022\032.mlflow.GetRegisteredMode" +
-      "l\032#.mlflow.GetRegisteredModel.Response\"{" +
-      "\362\206\031w\n2\n\003GET\022%/preview/mlflow/registered-" +
-      "models/get\032\004\010\002\020\000\n*\n\003GET\022\035/mlflow/registe" +
-      "red-models/get\032\004\010\002\020\000\020\001*\023Get RegisteredMo" +
-      "del\022\352\001\n\026searchRegisteredModels\022\036.mlflow." +
-      "SearchRegisteredModels\032\'.mlflow.SearchRe" +
-      "gisteredModels.Response\"\206\001\362\206\031\201\001\n5\n\003GET\022(" +
-      "/preview/mlflow/registered-models/search" +
-      "\032\004\010\002\020\000\n-\n\003GET\022 /mlflow/registered-models" +
-      "/search\032\004\010\002\020\000\020\001*\027Search RegisteredModels" +
-      "\022\334\001\n\024listRegisteredModels\022\034.mlflow.ListR" +
-      "egisteredModels\032%.mlflow.ListRegisteredM" +
-      "odels.Response\"\177\362\206\031{\n3\n\003GET\022&/preview/ml" +
-      "flow/registered-models/list\032\004\010\002\020\000\n+\n\003GET" +
-      "\022\036/mlflow/registered-models/list\032\004\010\002\020\000\020\001" +
-      "*\025List RegisteredModels\022\366\001\n\021getLatestVer" +
-      "sions\022\031.mlflow.GetLatestVersions\032\".mlflo" +
-      "w.GetLatestVersions.Response\"\241\001\362\206\031\234\001\nB\n\003" +
-      "GET\0225/preview/mlflow/registered-models/g" +
-      "et-latest-versions\032\004\010\002\020\000\n:\n\003GET\022-/mlflow" +
-      "/registered-models/get-latest-versions\032\004" +
-      "\010\002\020\000\020\001*\030Get Latest ModelVersions\022\324\001\n\022cre" +
-      "ateModelVersion\022\032.mlflow.CreateModelVers" +
-      "ion\032#.mlflow.CreateModelVersion.Response" +
-      "\"}\362\206\031y\n3\n\004POST\022%/preview/mlflow/model-ve" +
-      "rsions/create\032\004\010\002\020\000\n+\n\004POST\022\035/mlflow/mod" +
-      "el-versions/create\032\004\010\002\020\000\020\001*\023Create Model" +
-      "Version\022\326\001\n\022updateModelVersion\022\032.mlflow." +
-      "UpdateModelVersion\032#.mlflow.UpdateModelV" +
-      "ersion.Response\"\177\362\206\031{\n4\n\005PATCH\022%/preview" +
-      "/mlflow/model-versions/update\032\004\010\002\020\000\n,\n\005P" +
-      "ATCH\022\035/mlflow/model-versions/update\032\004\010\002\020" +
-      "\000\020\001*\023Update ModelVersion\022\217\002\n\033transitionM" +
-      "odelVersionStage\022#.mlflow.TransitionMode" +
-      "lVersionStage\032,.mlflow.TransitionModelVe" +
-      "rsionStage.Response\"\234\001\362\206\031\227\001\n=\n\004POST\022//pr" +
-      "eview/mlflow/model-versions/transition-s" +
-      "tage\032\004\010\002\020\000\n5\n\004POST\022\'/mlflow/model-versio" +
-      "ns/transition-stage\032\004\010\002\020\000\020\001*\035Transition " +
-      "ModelVersion Stage\022\331\001\n\022deleteModelVersio" +
-      "n\022\032.mlflow.DeleteModelVersion\032#.mlflow.D" +
-      "eleteModelVersion.Response\"\201\001\362\206\031}\n5\n\006DEL" +
-      "ETE\022%/preview/mlflow/model-versions/dele" +
-      "te\032\004\010\002\020\000\n-\n\006DELETE\022\035/mlflow/model-versio" +
-      "ns/delete\032\004\010\002\020\000\020\001*\023Delete ModelVersion\022\300" +
-      "\001\n\017getModelVersion\022\027.mlflow.GetModelVers" +
-      "ion\032 .mlflow.GetModelVersion.Response\"r\362" +
-      "\206\031n\n/\n\003GET\022\"/preview/mlflow/model-versio" +
-      "ns/get\032\004\010\002\020\000\n\'\n\003GET\022\032/mlflow/model-versi" +
-      "ons/get\032\004\010\002\020\000\020\001*\020Get ModelVersion\022\326\001\n\023se" +
-      "archModelVersions\022\033.mlflow.SearchModelVe" +
-      "rsions\032$.mlflow.SearchModelVersions.Resp" +
-      "onse\"|\362\206\031x\n2\n\003GET\022%/preview/mlflow/model" +
-      "-versions/search\032\004\010\002\020\000\n*\n\003GET\022\035/mlflow/m" +
-      "odel-versions/search\032\004\010\002\020\000\020\001*\024Search Mod" +
-      "elVersions\022\230\002\n\032getModelVersionDownloadUr" +
-      "i\022\".mlflow.GetModelVersionDownloadUri\032+." +
-      "mlflow.GetModelVersionDownloadUri.Respon" +
-      "se\"\250\001\362\206\031\243\001\n<\n\003GET\022//preview/mlflow/model" +
-      "-versions/get-download-uri\032\004\010\002\020\000\n4\n\003GET\022" +
-      "\'/mlflow/model-versions/get-download-uri" +
-      "\032\004\010\002\020\000\020\001*+Get Download URI For ModelVers" +
-      "ion Artifacts\022\354\001\n\025setRegisteredModelTag\022" +
-      "\035.mlflow.SetRegisteredModelTag\032&.mlflow." +
-      "SetRegisteredModelTag.Response\"\213\001\362\206\031\206\001\n7" +
-      "\n\004POST\022)/preview/mlflow/registered-model" +
-      "s/set-tag\032\004\010\002\020\000\n/\n\004POST\022!/mlflow/registe" +
-      "red-models/set-tag\032\004\010\002\020\000\020\001*\030Set Register" +
-      "ed Model Tag\022\331\001\n\022setModelVersionTag\022\032.ml" +
-      "flow.SetModelVersionTag\032#.mlflow.SetMode" +
-      "lVersionTag.Response\"\201\001\362\206\031}\n4\n\004POST\022&/pr" +
-      "eview/mlflow/model-versions/set-tag\032\004\010\002\020" +
-      "\000\n,\n\004POST\022\036/mlflow/model-versions/set-ta" +
-      "g\032\004\010\002\020\000\020\001*\025Set Model Version Tag\022\202\002\n\030del" +
-      "eteRegisteredModelTag\022 .mlflow.DeleteReg" +
-      "isteredModelTag\032).mlflow.DeleteRegistere" +
-      "dModelTag.Response\"\230\001\362\206\031\223\001\n<\n\006DELETE\022,/p" +
-      "review/mlflow/registered-models/delete-t" +
-      "ag\032\004\010\002\020\000\n4\n\006DELETE\022$/mlflow/registered-m" +
-      "odels/delete-tag\032\004\010\002\020\000\020\001*\033Delete Registe" +
-      "red Model Tag\022\360\001\n\025deleteModelVersionTag\022" +
-      "\035.mlflow.DeleteModelVersionTag\032&.mlflow." +
-      "DeleteModelVersionTag.Response\"\217\001\362\206\031\212\001\n9" +
-      "\n\006DELETE\022)/preview/mlflow/model-versions" +
-      "/delete-tag\032\004\010\002\020\000\n1\n\006DELETE\022!/mlflow/mod" +
-      "el-versions/delete-tag\032\004\010\002\020\000\020\001*\030Delete M" +
-      "odel Version Tag\022\337\001\n\022deployModelVersion\022" +
-      "\032.mlflow.DeployModelVersion\032#.mlflow.Dep" +
-      "loyModelVersion.Response\"\207\001\362\206\031\202\001\n7\n\004POST" +
-      "\022)/preview/mlflow/model-versions/oyo-dep" +
-      "loy\032\004\010\002\020\000\n/\n\004POST\022!/mlflow/model-version" +
-      "s/oyo-deploy\032\004\010\002\020\000\020\001*\024Deploy Model Versi" +
-      "on\022\207\002\n\034updateModelVersionDeployment\022\036.ml" +
-      "flow.ModelVersionDeployment\032\036.mlflow.Mod" +
-      "elVersionDeployment\"\246\001\362\206\031\241\001\n>\n\004POST\0220/pr" +
-      "eview/mlflow/model-versions/update-deplo" +
-      "yment\032\004\010\002\020\000\n6\n\004POST\022(/mlflow/model-versi" +
-      "ons/update-deployment\032\004\010\002\020\000\020\001*%Update Mo" +
-      "del Version Deployment entry\022\207\002\n\034createM" +
-      "odelVersionDeployment\022\036.mlflow.ModelVers" +
-      "ionDeployment\032\036.mlflow.ModelVersionDeplo" +
-      "yment\"\246\001\362\206\031\241\001\n>\n\004POST\0220/preview/mlflow/m" +
-      "odel-versions/create-deployment\032\004\010\002\020\000\n6\n" +
-      "\004POST\022(/mlflow/model-versions/create-dep" +
-      "loyment\032\004\010\002\020\000\020\001*%Create Model Version De" +
-      "ployment entryB!\n\024org.mlflow.api.proto\220\001" +
-      "\001\240\001\001\342?\002\020\001"
+      "$this.Response]\"\355\002\n\026ModelVersionDeployme" +
+      "nt\022\020\n\002id\030\001 \001(\tB\004\370\206\031\001\022\031\n\013environment\030\002 \001(" +
+      "\tB\004\370\206\031\001\022\032\n\014service_name\030\003 \001(\tB\004\370\206\031\001\022\017\n\007j" +
+      "ira_id\030\004 \001(\t\022\016\n\006status\030\005 \001(\t\022\032\n\022creation" +
+      "_timestamp\030\006 \001(\003\022\036\n\026last_updated_timesta" +
+      "mp\030\007 \001(\003\022\017\n\007message\030\010 \001(\t\022\017\n\007job_url\030\020 \001" +
+      "(\t\022\020\n\010helm_url\030\021 \001(\t\022\013\n\003cpu\030\022 \001(\t\022\016\n\006mem" +
+      "ory\030\023 \001(\t\022\025\n\rinitial_delay\030\024 \001(\t\022\030\n\tover" +
+      "write\030\025 \001(\010:\005false:+\342?(\n&com.databricks." +
+      "rpc.RPC[$this.Response]\"\230\003\n\034CreateModelV" +
+      "ersionDeployment\022\n\n\002id\030\001 \001(\t\022\031\n\013environm" +
+      "ent\030\002 \001(\tB\004\370\206\031\001\022\032\n\014service_name\030\003 \001(\tB\004\370" +
+      "\206\031\001\022\017\n\007jira_id\030\004 \001(\t\022\016\n\006status\030\005 \001(\t\022\017\n\007" +
+      "message\030\010 \001(\t\022\022\n\004name\030\t \001(\tB\004\370\206\031\001\022\025\n\007ver" +
+      "sion\030\n \001(\tB\004\370\206\031\001\022\017\n\007job_url\030\020 \001(\t\022\013\n\003cpu" +
+      "\030\022 \001(\t\022\016\n\006memory\030\023 \001(\t\022\025\n\rinitial_delay\030" +
+      "\024 \001(\t\022\030\n\toverwrite\030\025 \001(\010:\005false\032L\n\010Respo" +
+      "nse\022@\n\030model_version_deployment\030\001 \001(\0132\036." +
+      "mlflow.ModelVersionDeployment:+\342?(\n&com." +
+      "databricks.rpc.RPC[$this.Response]\"\200\002\n\034U" +
+      "pdateModelVersionDeployment\022\020\n\002id\030\001 \001(\tB" +
+      "\004\370\206\031\001\022\017\n\007jira_id\030\004 \001(\t\022\016\n\006status\030\005 \001(\t\022\017" +
+      "\n\007message\030\010 \001(\t\022\017\n\007job_url\030\020 \001(\t\022\020\n\010helm" +
+      "_url\030\021 \001(\t\032L\n\010Response\022@\n\030model_version_" +
+      "deployment\030\001 \001(\0132\036.mlflow.ModelVersionDe" +
+      "ployment:+\342?(\n&com.databricks.rpc.RPC[$t" +
+      "his.Response]*R\n\022ModelVersionStatus\022\030\n\024P" +
+      "ENDING_REGISTRATION\020\001\022\027\n\023FAILED_REGISTRA" +
+      "TION\020\002\022\t\n\005READY\020\0032\374(\n\024ModelRegistryServi" +
+      "ce\022\350\001\n\025createRegisteredModel\022\035.mlflow.Cr" +
+      "eateRegisteredModel\032&.mlflow.CreateRegis" +
+      "teredModel.Response\"\207\001\362\206\031\202\001\n6\n\004POST\022(/pr" +
+      "eview/mlflow/registered-models/create\032\004\010" +
+      "\002\020\000\n.\n\004POST\022 /mlflow/registered-models/c" +
+      "reate\032\004\010\002\020\000\020\001*\026Create RegisteredModel\022\350\001" +
+      "\n\025renameRegisteredModel\022\035.mlflow.RenameR" +
+      "egisteredModel\032&.mlflow.RenameRegistered" +
+      "Model.Response\"\207\001\362\206\031\202\001\n6\n\004POST\022(/preview" +
+      "/mlflow/registered-models/rename\032\004\010\002\020\000\n." +
+      "\n\004POST\022 /mlflow/registered-models/rename" +
+      "\032\004\010\002\020\000\020\001*\026Rename RegisteredModel\022\352\001\n\025upd" +
+      "ateRegisteredModel\022\035.mlflow.UpdateRegist" +
+      "eredModel\032&.mlflow.UpdateRegisteredModel" +
+      ".Response\"\211\001\362\206\031\204\001\n7\n\005PATCH\022(/preview/mlf" +
+      "low/registered-models/update\032\004\010\002\020\000\n/\n\005PA" +
+      "TCH\022 /mlflow/registered-models/update\032\004\010" +
+      "\002\020\000\020\001*\026Update RegisteredModel\022\354\001\n\025delete" +
+      "RegisteredModel\022\035.mlflow.DeleteRegistere" +
+      "dModel\032&.mlflow.DeleteRegisteredModel.Re" +
+      "sponse\"\213\001\362\206\031\206\001\n8\n\006DELETE\022(/preview/mlflo" +
+      "w/registered-models/delete\032\004\010\002\020\000\n0\n\006DELE" +
+      "TE\022 /mlflow/registered-models/delete\032\004\010\002" +
+      "\020\000\020\001*\026Delete RegisteredModel\022\322\001\n\022getRegi" +
+      "steredModel\022\032.mlflow.GetRegisteredModel\032" +
+      "#.mlflow.GetRegisteredModel.Response\"{\362\206" +
+      "\031w\n2\n\003GET\022%/preview/mlflow/registered-mo" +
+      "dels/get\032\004\010\002\020\000\n*\n\003GET\022\035/mlflow/registere" +
+      "d-models/get\032\004\010\002\020\000\020\001*\023Get RegisteredMode" +
+      "l\022\352\001\n\026searchRegisteredModels\022\036.mlflow.Se" +
+      "archRegisteredModels\032\'.mlflow.SearchRegi" +
+      "steredModels.Response\"\206\001\362\206\031\201\001\n5\n\003GET\022(/p" +
+      "review/mlflow/registered-models/search\032\004" +
+      "\010\002\020\000\n-\n\003GET\022 /mlflow/registered-models/s" +
+      "earch\032\004\010\002\020\000\020\001*\027Search RegisteredModels\022\334" +
+      "\001\n\024listRegisteredModels\022\034.mlflow.ListReg" +
+      "isteredModels\032%.mlflow.ListRegisteredMod" +
+      "els.Response\"\177\362\206\031{\n3\n\003GET\022&/preview/mlfl" +
+      "ow/registered-models/list\032\004\010\002\020\000\n+\n\003GET\022\036" +
+      "/mlflow/registered-models/list\032\004\010\002\020\000\020\001*\025" +
+      "List RegisteredModels\022\366\001\n\021getLatestVersi" +
+      "ons\022\031.mlflow.GetLatestVersions\032\".mlflow." +
+      "GetLatestVersions.Response\"\241\001\362\206\031\234\001\nB\n\003GE" +
+      "T\0225/preview/mlflow/registered-models/get" +
+      "-latest-versions\032\004\010\002\020\000\n:\n\003GET\022-/mlflow/r" +
+      "egistered-models/get-latest-versions\032\004\010\002" +
+      "\020\000\020\001*\030Get Latest ModelVersions\022\324\001\n\022creat" +
+      "eModelVersion\022\032.mlflow.CreateModelVersio" +
+      "n\032#.mlflow.CreateModelVersion.Response\"}" +
+      "\362\206\031y\n3\n\004POST\022%/preview/mlflow/model-vers" +
+      "ions/create\032\004\010\002\020\000\n+\n\004POST\022\035/mlflow/model" +
+      "-versions/create\032\004\010\002\020\000\020\001*\023Create ModelVe" +
+      "rsion\022\326\001\n\022updateModelVersion\022\032.mlflow.Up" +
+      "dateModelVersion\032#.mlflow.UpdateModelVer" +
+      "sion.Response\"\177\362\206\031{\n4\n\005PATCH\022%/preview/m" +
+      "lflow/model-versions/update\032\004\010\002\020\000\n,\n\005PAT" +
+      "CH\022\035/mlflow/model-versions/update\032\004\010\002\020\000\020" +
+      "\001*\023Update ModelVersion\022\217\002\n\033transitionMod" +
+      "elVersionStage\022#.mlflow.TransitionModelV" +
+      "ersionStage\032,.mlflow.TransitionModelVers" +
+      "ionStage.Response\"\234\001\362\206\031\227\001\n=\n\004POST\022//prev" +
+      "iew/mlflow/model-versions/transition-sta" +
+      "ge\032\004\010\002\020\000\n5\n\004POST\022\'/mlflow/model-versions" +
+      "/transition-stage\032\004\010\002\020\000\020\001*\035Transition Mo" +
+      "delVersion Stage\022\331\001\n\022deleteModelVersion\022" +
+      "\032.mlflow.DeleteModelVersion\032#.mlflow.Del" +
+      "eteModelVersion.Response\"\201\001\362\206\031}\n5\n\006DELET" +
+      "E\022%/preview/mlflow/model-versions/delete" +
+      "\032\004\010\002\020\000\n-\n\006DELETE\022\035/mlflow/model-versions" +
+      "/delete\032\004\010\002\020\000\020\001*\023Delete ModelVersion\022\300\001\n" +
+      "\017getModelVersion\022\027.mlflow.GetModelVersio" +
+      "n\032 .mlflow.GetModelVersion.Response\"r\362\206\031" +
+      "n\n/\n\003GET\022\"/preview/mlflow/model-versions" +
+      "/get\032\004\010\002\020\000\n\'\n\003GET\022\032/mlflow/model-version" +
+      "s/get\032\004\010\002\020\000\020\001*\020Get ModelVersion\022\326\001\n\023sear" +
+      "chModelVersions\022\033.mlflow.SearchModelVers" +
+      "ions\032$.mlflow.SearchModelVersions.Respon" +
+      "se\"|\362\206\031x\n2\n\003GET\022%/preview/mlflow/model-v" +
+      "ersions/search\032\004\010\002\020\000\n*\n\003GET\022\035/mlflow/mod" +
+      "el-versions/search\032\004\010\002\020\000\020\001*\024Search Model" +
+      "Versions\022\230\002\n\032getModelVersionDownloadUri\022" +
+      "\".mlflow.GetModelVersionDownloadUri\032+.ml" +
+      "flow.GetModelVersionDownloadUri.Response" +
+      "\"\250\001\362\206\031\243\001\n<\n\003GET\022//preview/mlflow/model-v" +
+      "ersions/get-download-uri\032\004\010\002\020\000\n4\n\003GET\022\'/" +
+      "mlflow/model-versions/get-download-uri\032\004" +
+      "\010\002\020\000\020\001*+Get Download URI For ModelVersio" +
+      "n Artifacts\022\354\001\n\025setRegisteredModelTag\022\035." +
+      "mlflow.SetRegisteredModelTag\032&.mlflow.Se" +
+      "tRegisteredModelTag.Response\"\213\001\362\206\031\206\001\n7\n\004" +
+      "POST\022)/preview/mlflow/registered-models/" +
+      "set-tag\032\004\010\002\020\000\n/\n\004POST\022!/mlflow/registere" +
+      "d-models/set-tag\032\004\010\002\020\000\020\001*\030Set Registered" +
+      " Model Tag\022\331\001\n\022setModelVersionTag\022\032.mlfl" +
+      "ow.SetModelVersionTag\032#.mlflow.SetModelV" +
+      "ersionTag.Response\"\201\001\362\206\031}\n4\n\004POST\022&/prev" +
+      "iew/mlflow/model-versions/set-tag\032\004\010\002\020\000\n" +
+      ",\n\004POST\022\036/mlflow/model-versions/set-tag\032" +
+      "\004\010\002\020\000\020\001*\025Set Model Version Tag\022\202\002\n\030delet" +
+      "eRegisteredModelTag\022 .mlflow.DeleteRegis" +
+      "teredModelTag\032).mlflow.DeleteRegisteredM" +
+      "odelTag.Response\"\230\001\362\206\031\223\001\n<\n\006DELETE\022,/pre" +
+      "view/mlflow/registered-models/delete-tag" +
+      "\032\004\010\002\020\000\n4\n\006DELETE\022$/mlflow/registered-mod" +
+      "els/delete-tag\032\004\010\002\020\000\020\001*\033Delete Registere" +
+      "d Model Tag\022\360\001\n\025deleteModelVersionTag\022\035." +
+      "mlflow.DeleteModelVersionTag\032&.mlflow.De" +
+      "leteModelVersionTag.Response\"\217\001\362\206\031\212\001\n9\n\006" +
+      "DELETE\022)/preview/mlflow/model-versions/d" +
+      "elete-tag\032\004\010\002\020\000\n1\n\006DELETE\022!/mlflow/model" +
+      "-versions/delete-tag\032\004\010\002\020\000\020\001*\030Delete Mod" +
+      "el Version Tag\022\337\001\n\022deployModelVersion\022\032." +
+      "mlflow.DeployModelVersion\032#.mlflow.Deplo" +
+      "yModelVersion.Response\"\207\001\362\206\031\202\001\n7\n\004POST\022)" +
+      "/preview/mlflow/model-versions/oyo-deplo" +
+      "y\032\004\010\002\020\000\n/\n\004POST\022!/mlflow/model-versions/" +
+      "oyo-deploy\032\004\010\002\020\000\020\001*\024Deploy Model Version" +
+      "\022\215\002\n\034updateModelVersionDeployment\022$.mlfl" +
+      "ow.UpdateModelVersionDeployment\032\036.mlflow" +
+      ".ModelVersionDeployment\"\246\001\362\206\031\241\001\n>\n\004POST\022" +
+      "0/preview/mlflow/model-versions/update-d" +
+      "eployment\032\004\010\002\020\000\n6\n\004POST\022(/mlflow/model-v" +
+      "ersions/update-deployment\032\004\010\002\020\000\020\001*%Updat" +
+      "e Model Version Deployment entry\022\215\002\n\034cre" +
+      "ateModelVersionDeployment\022$.mlflow.Creat" +
+      "eModelVersionDeployment\032\036.mlflow.ModelVe" +
+      "rsionDeployment\"\246\001\362\206\031\241\001\n>\n\004POST\0220/previe" +
+      "w/mlflow/model-versions/create-deploymen" +
+      "t\032\004\010\002\020\000\n6\n\004POST\022(/mlflow/model-versions/" +
+      "create-deployment\032\004\010\002\020\000\020\001*%Create Model " +
+      "Version Deployment entryB!\n\024org.mlflow.a" +
+      "pi.proto\220\001\001\240\001\001\342?\002\020\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -50855,13 +50370,13 @@ public final class ModelRegistry {
     internal_static_mlflow_ModelVersionDeployment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_mlflow_ModelVersionDeployment_descriptor,
-        new java.lang.String[] { "Id", "Enviroment", "ServiceName", "JiraId", "Status", "CreationTime", "LastUpdatedTime", "Message", "JobUrl", "HelmUrl", "Cpu", "Memory", "InitialDelay", "Overwrite", });
+        new java.lang.String[] { "Id", "Environment", "ServiceName", "JiraId", "Status", "CreationTimestamp", "LastUpdatedTimestamp", "Message", "JobUrl", "HelmUrl", "Cpu", "Memory", "InitialDelay", "Overwrite", });
     internal_static_mlflow_CreateModelVersionDeployment_descriptor =
       getDescriptor().getMessageTypes().get(25);
     internal_static_mlflow_CreateModelVersionDeployment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_mlflow_CreateModelVersionDeployment_descriptor,
-        new java.lang.String[] { "Id", "Enviroment", "ServiceName", "JiraId", "Status", "Message", "Name", "Version", "JobUrl", "Cpu", "Memory", "InitialDelay", "Overwrite", });
+        new java.lang.String[] { "Id", "Environment", "ServiceName", "JiraId", "Status", "Message", "Name", "Version", "JobUrl", "Cpu", "Memory", "InitialDelay", "Overwrite", });
     internal_static_mlflow_CreateModelVersionDeployment_Response_descriptor =
       internal_static_mlflow_CreateModelVersionDeployment_descriptor.getNestedTypes().get(0);
     internal_static_mlflow_CreateModelVersionDeployment_Response_fieldAccessorTable = new
@@ -50873,7 +50388,7 @@ public final class ModelRegistry {
     internal_static_mlflow_UpdateModelVersionDeployment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_mlflow_UpdateModelVersionDeployment_descriptor,
-        new java.lang.String[] { "Id", "Enviroment", "ServiceName", "JiraId", "Status", "Message", "JobUrl", "HelmUrl", });
+        new java.lang.String[] { "Id", "JiraId", "Status", "Message", "JobUrl", "HelmUrl", });
     internal_static_mlflow_UpdateModelVersionDeployment_Response_descriptor =
       internal_static_mlflow_UpdateModelVersionDeployment_descriptor.getNestedTypes().get(0);
     internal_static_mlflow_UpdateModelVersionDeployment_Response_fieldAccessorTable = new

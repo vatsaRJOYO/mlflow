@@ -1,3 +1,4 @@
+from mlflow.entities.model_registry.model_version_deployment import ModelVersionDeployment
 import time
 
 from sqlalchemy import (
@@ -185,6 +186,8 @@ class SqlModelVersionDeployment(Base):
 
     environment = Column(String(32), nullable=False)
 
+    service_name = Column(String(32), nullable=False)
+
     jira_id = Column(String(32), nullable=True)
 
     status = Column(String(32))
@@ -230,4 +233,19 @@ class SqlModelVersionDeployment(Base):
 
     # entity mappers
     def to_mlflow_entity(self):
-        return ModelVersionTag(self.key, self.value)
+        return ModelVersionDeployment(
+            id = self.id,
+            environment=self.environment,
+            service_name=self.service_name,
+            jira_id=self.jira_id,
+            status=self.status,
+            creation_timestamp=self.creation_time,
+            last_updated_timestamp=self.last_updated_time,
+            message=self.message,
+            job_url=self.job_url,
+            helm_url=self.helm_url,
+            cpu=self.cpu,
+            memory=self.memory,
+            initial_delay=self.initial_delay,
+            overwrite=self.overwrite       
+        )

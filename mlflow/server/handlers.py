@@ -811,7 +811,10 @@ def _deploy_model_version():
     _logger.log(logging.INFO, str(model_version))
     from mlflow.server.handler_util import deploy_model_version
 
-    deploy_model_version(request_message.environment, request_message.service_name, model_version, registered_model)
+    deploy_model_version(
+        request_message.environment, request_message.service_name, model_version, registered_model,
+        request_message.overwrite, request_message.cpu, request_message.memory, request_message.initial_delay
+    )
     
     return _wrap_response(DeployModelVersion.Response())
 
@@ -834,17 +837,14 @@ def _create_model_version_deployment():
 
 @catch_mlflow_exception
 def _update_model_version_deployment():
-    request_message = _get_request_message(CreateModelVersionDeployment())
+    request_message = _get_request_message(UpdateModelVersionDeployment())
     model_version_deployment = _get_model_registry_store().update_model_version_deployment(
         id=request_message.id,
-        model_name=request_message.model_name,
-        model_version=request_message.model_version,
         jira_id=request_message.jira_id,
         status=request_message.status,
         message=request_message.message,
         job_url=request_message.job_url,
         helm_url=request_message.helm_url,
-
     )
     response_message = model_version_deployment.to_proto()
     return _wrap_response(response_message)

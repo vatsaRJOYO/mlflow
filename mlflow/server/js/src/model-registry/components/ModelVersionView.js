@@ -170,9 +170,9 @@ export class ModelVersionViewImpl extends React.Component {
             values.environment, 
             values['service-name'],
             values['overwrite'],
-            this.transformOrDefault(values['cpu'], (val) => val+'m' , '500m'),
-            this.transformOrDefault(values['memory'], (val) => val+'Mi', '500Mi'),
-            this.transformOrDefault(values[`initial-delay`], (val)=> val, '60')
+            this.transformOrDefault(values['cpu'], (val) => val+'m' , ''),
+            this.transformOrDefault(values['memory'], (val) => val+'Mi', ''),
+            this.transformOrDefault(values[`initial-delay`], (val)=> val, '')
           )
           .then(() => {
             this.setState({ isDeploymentRequestPending: false });

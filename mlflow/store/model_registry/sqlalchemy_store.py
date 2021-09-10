@@ -1,5 +1,4 @@
 from sys import version
-from mlflow.pyfunc.scoring_server import init
 import time
 
 import logging
@@ -924,7 +923,7 @@ class SqlAlchemyStore(AbstractStore):
                 )
             
             try:
-                if int(model_version) != int(sql_model_version_deployment.model_version):
+                if (not isStringEmpty(model_name)) and int(model_version) != int(sql_model_version_deployment.model_version):
                     raise MlflowException(
                         "Model Version deployment (id={}, version={}) " "not found".format(id, version),
                         RESOURCE_DOES_NOT_EXIST,
@@ -944,16 +943,16 @@ class SqlAlchemyStore(AbstractStore):
             if not isStringEmpty(jira_id):
                 sql_model_version_deployment.jira_id = jira_id
             
-            if not isStringEmpty(jira_id):
+            if not isStringEmpty(status):
                 sql_model_version_deployment.status = status
             
-            if not isStringEmpty(jira_id):
+            if not isStringEmpty(message):
                 sql_model_version_deployment.message = message
             
-            if not isStringEmpty(jira_id):
+            if not isStringEmpty(job_url):
                 sql_model_version_deployment.job_url = job_url
             
-            if not isStringEmpty(jira_id):
+            if not isStringEmpty(helm_url):
                 sql_model_version_deployment.helm_url = helm_url
                 
             sql_model_version_deployment.last_updated_time = last_updated_time

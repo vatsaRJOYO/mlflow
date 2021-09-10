@@ -1,12 +1,10 @@
 from mlflow.entities.model_registry.model_version_deployment import ModelVersionDeployment
-from mlflow.azureml import deploy
 from mlflow.entities.model_registry._model_registry_entity import _ModelRegistryEntity
 from mlflow.entities.model_registry.model_version_tag import ModelVersionTag
 from mlflow.entities.model_registry.model_version_status import ModelVersionStatus
 from mlflow.protos.model_registry_pb2 import (
     ModelVersion as ProtoModelVersion,
     ModelVersionTag as ProtoModelVersionTag,
-    ModelVersionDeployment as ProtoModelVersionDeployment,
 )
 
 

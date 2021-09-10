@@ -3,6 +3,7 @@ import { Tag } from 'antd';
 // eslint-disable-next-line
 import * as overrides from './constant-overrides'; // eslint-disable-line import/no-namespace
 import { FormattedMessage } from 'react-intl';
+import { Radio } from 'antd'
 
 export const Stages = {
   NONE: 'None',
@@ -112,3 +113,38 @@ export const archiveExistingVersionToolTipText = (currentStage) => (
     values={{ currentStage: currentStage }}
   />
 );
+
+export const deploymentOptions = {
+  production: {
+    radios: [
+      <Radio.Button value="staging" key="staging">Staging</Radio.Button>,
+      <Radio.Button value="production" key="production">Production</Radio.Button>
+    ],
+    defaultRadio:"staging",
+  },
+  dev: {
+    radios: [
+      <Radio.Button value="dev" key="dev">Dev</Radio.Button>,
+    ],
+    defaultRadio:"dev",
+  },
+};
+
+export const deploymentsTableEnvFilterOptions = {
+  production: [
+    {
+        text: 'staging',
+        value: 'staging',
+    },
+    {
+        text: 'production',
+        value: 'prodction',
+    },
+  ],
+  dev: [
+    {
+        text: 'dev',
+        value: 'dev',
+    },
+  ],
+};

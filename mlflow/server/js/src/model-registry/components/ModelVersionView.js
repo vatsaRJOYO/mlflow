@@ -34,7 +34,7 @@ import { connect } from 'react-redux';
 import { PageHeader } from '../../shared/building_blocks/PageHeader';
 import { Spacer } from '../../shared/building_blocks/Spacer';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { OyoModelDeploymentView } from '../../common/components/OyoModelDeploymentView';
+import { OyoModelDeploymentView } from './OyoModelDeploymentView';
 
 export class ModelVersionViewImpl extends React.Component {
   static propTypes = {
@@ -153,6 +153,8 @@ export class ModelVersionViewImpl extends React.Component {
     });
   };
 
+  transformOrDefault = (val, transformFunc, defaultVal) => (val == null || val === '') ? defaultVal : transformFunc(val);
+
   handleTriggerDeployment = (e) => {
     e.preventDefault();
     const { form } = this.deploymentFormRef.props;
@@ -162,10 +164,20 @@ export class ModelVersionViewImpl extends React.Component {
       if (!err) {
         this.setState({ isDeploymentRequestPending: true });
         this.props
-          .triggerModelVersionDeploymentApi(modelName, version, values.environment, values['service-name'] )
+          .triggerModelVersionDeploymentApi(
+            modelName, 
+            version, 
+            values.environment, 
+            values['service-name'],
+            values['overwrite'],
+            this.transformOrDefault(values['cpu'], (val) => val+'m' , '500m'),
+            this.transformOrDefault(values['memory'], (val) => val+'Mi', '500Mi'),
+            this.transformOrDefault(values[`initial-delay`], (val)=> val, '60')
+          )
           .then(() => {
             this.setState({ isDeploymentRequestPending: false });
             form.resetFields();
+            this.deploymentFormRef.resetStates();
             message.info(
               this.props.intl.formatMessage(
                 {
@@ -426,7 +438,7 @@ export class ModelVersionViewImpl extends React.Component {
 
   render() {
     const { modelName, modelVersion, tags, schema } = this.props;
-    const { description } = modelVersion;
+    const { description, deployments } = modelVersion;
     const {
       isDeleteModalVisible,
       isDeleteModalConfirmLoading,
@@ -530,6 +542,7 @@ export class ModelVersionViewImpl extends React.Component {
               wrappedComponentRef={this.saveDeploymentFormRef}
               handleTriggerDeployment={this.handleTriggerDeployment}
               tags={tags}
+              deployments={deployments}
               isRequestPending={isDeploymentRequestPending}
             />
           </CollapsibleSection>

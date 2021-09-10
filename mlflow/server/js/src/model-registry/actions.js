@@ -248,13 +248,17 @@ export const deleteModelVersionTagApi = (modelName, version, key, id = getUUID()
 });
 
 export const TRIGGER_MODEL_VERSION_DEPLOYMENT = 'TRIGGER_MODEL_VERSION_DEPLOYMENT';
-export const triggerModelVersionDeploymentApi = (modelName, version, environemnt, serviceName,id = getUUID()) => ({
+export const triggerModelVersionDeploymentApi = (modelName, version, environemnt, serviceName, overwrite, cpu, memory, initialDelay, id = getUUID()) => ({
   type: TRIGGER_MODEL_VERSION_DEPLOYMENT,
   payload: wrapDeferred(Services.deployModelVersion, {
     name: modelName,
     version: version,
     environment: environemnt,
     service_name: serviceName,
+    overwrite: overwrite,
+    cpu: cpu,
+    memory: memory,
+    initial_delay: initialDelay,
   }),
   meta: { id, modelName, version, environemnt, serviceName },
 });

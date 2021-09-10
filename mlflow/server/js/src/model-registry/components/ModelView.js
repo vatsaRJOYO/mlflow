@@ -29,8 +29,6 @@ import { Spacer } from '../../shared/building_blocks/Spacer';
 import { Button } from '../../shared/building_blocks/Button';
 import { Radio } from '../../shared/building_blocks/Radio';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { OyoModelVersionUploadView } from '../../common/components/OyoModelVersionUploadView';
-import { getUUID } from '../../common/utils/ActionUtils';
 
 export const StageFilters = {
   ALL: 'ALL',
@@ -41,7 +39,6 @@ export class ModelViewImpl extends React.Component {
   constructor(props) {
     super(props);
     this.onCompare = this.onCompare.bind(this);
-    this.getNewModelVersionUploadProps = this.getNewModelVersionUploadProps.bind(this);
   }
 
   static propTypes = {
@@ -71,17 +68,8 @@ export class ModelViewImpl extends React.Component {
     isDeleteModalConfirmLoading: false,
     runsSelected: {},
     isTagsRequestPending: false,
-    modelVersionUploadProps: this.getNewModelVersionUploadProps(),
-    isModelVersionUploadRequestPending: false,
   };
 
-  getNewModelVersionUploadProps(){
-    return {
-      bucketName: (process.env.REACT_APP_MODEL_UPLOAD_BUCKER ? process.env.REACT_APP_MODEL_UPLOAD_BUCKER : "stg-mlplatform-mlpl-general"),
-      //TODO: getUUID()
-      pathPrefix: ['manual_model_uploads', this.props.model.name,'uuid'].join('/'),
-    };
-  }
 
   componentDidMount() {
     const pageTitle = `${this.props.model.name} - MLflow Model`;
@@ -208,46 +196,6 @@ export class ModelViewImpl extends React.Component {
     });
   };
 
-  handleCreateModelVersion = (e) => {
-    e.preventDefault();
-    const { form } = this.modelVersionUploadFormRef.props;
-    const { model } = this.props;
-    const modelName = model.name;
-    form.validateFields((err, values) => {
-      if (!err) {
-        this.setState({ isModelVersionUploadRequestPending: true });
-        this.props
-          .createModelVersionApi(
-            modelName, 
-            this.getUploadedModelSource(), null)
-          .then(() => {
-            this.setState({ isModelVersionUploadRequestPending: false });
-            this.handleResetModelUploadForm();
-          })
-          .catch((ex) => {
-            this.setState({ isModelVersionUploadRequestPending: false });
-            console.error(ex);
-            message.error('Failed to add tag. Error: ' + ex.getUserVisibleError());
-          });
-      }
-    });
-  };
-
-  getUploadedModelSource = () => {
-    return ['s3:/',this.state.modelVersionUploadProps.bucketName, this.state.modelVersionUploadProps.pathPrefix, 'model'].join('/');
-  }
-
-  resetModelVersionUploadProps = () => {
-    this.setState({ modelVersionUploadProps: this.getNewModelVersionUploadProps() });
-  }
-
-  handleResetModelUploadForm = () => {
-    const { form } = this.modelVersionUploadFormRef.props;
-    form.resetFields();
-    this.modelVersionUploadFormRef.resetState();
-    this.resetModelVersionUploadProps();
-  }
-
   handleSaveEdit = ({ name, value }) => {
     const { model } = this.props;
     const modelName = model.name;
@@ -309,7 +257,6 @@ export class ModelViewImpl extends React.Component {
       isDeleteModalVisible,
       isDeleteModalConfirmLoading,
       isTagsRequestPending,
-      isModelVersionUploadRequestPending,
     } = this.state;
     const modelName = model.name;
     const compareDisabled = Object.keys(this.state.runsSelected).length < 2;
@@ -393,7 +340,7 @@ export class ModelViewImpl extends React.Component {
           </CollapsibleSection>
         </div>
 
-        <div>
+        {/* <div>
         <CollapsibleSection
             title={
               <FormattedMessage
@@ -412,7 +359,7 @@ export class ModelViewImpl extends React.Component {
               isRequestPending={isModelVersionUploadRequestPending}
             />
           </CollapsibleSection>          
-        </div>
+        </div> */}
 
         <CollapsibleSection
           title={

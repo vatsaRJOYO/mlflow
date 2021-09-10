@@ -808,7 +808,7 @@ def _deploy_model_version():
     )
     registered_model = _get_model_registry_store().get_registered_model(name=request_message.name)
 
-    _logger.log(logging.INFO, str(model_version))
+    # _logger.log(logging.INFO, str(model_version))
     from mlflow.server.handler_util import deploy_model_version
 
     deploy_model_version(

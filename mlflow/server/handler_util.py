@@ -30,8 +30,10 @@ def _getJenkinsClient(environment:str):
         for env_name in envs_list:
             env_name_caps = env_name.upper()
             _config = [ os.environ.get(conf.format(env_name_caps)) for conf in JENKINS_CONFIGS_KEYS]
-            if reduce(lambda a, b: a and b , map(lambda a: a is None, _config)):
+            _logger.log(logging.INFO, _config)
+            if reduce(lambda a, b: a and b , map(lambda a: a is not None, _config)):
                 _jenkins_clients[env_name] = JenkinsRestApiClient(*_config)
+                _logger.log(logging.INFO, env_name+':  '+str(JenkinsRestApiClient))
     
     return _jenkins_clients.get(environment, None)
 
@@ -88,13 +90,11 @@ def deploy_model_version(
     client = _getJenkinsClient(environment=oyo_environemnt)
     if client is None:
         raise MlflowException('Jenkins client not found', PUBLIC)
-    
-    _logger.log(logging.INFO, str(params))
-    
+        
     response = client.triggerJob(params)
 
-    if response.status_code != 200:
-        raise MlflowException('Jenkins job Trigger failed', PUBLIC)
+    if response.status_code != 201:
+        raise MlflowException('Jenkins job Trigger failed with status code: {}'.format(response.status_code), PUBLIC)
     
 
     

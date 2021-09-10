@@ -830,6 +830,7 @@ def _create_model_version_deployment():
         memory=request_message.memory,
         initial_delay=request_message.initial_delay,
         overwrite=request_message.overwrite,
+        job_url=request_message.job_url,
     )
     response_message = model_version_deployment.to_proto()
     return _wrap_response(response_message)

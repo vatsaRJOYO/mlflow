@@ -845,7 +845,7 @@ class SqlAlchemyStore(AbstractStore):
             if existing_tag is not None:
                 session.delete(existing_tag)
     
-    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite):
+    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite, job_url):
 
         _validate_model_name(name)
         _validate_model_version(version)
@@ -865,7 +865,8 @@ class SqlAlchemyStore(AbstractStore):
                     cpu=cpu,
                     memory=memory,
                     initial_delay=initial_delay,
-                    overwrite=overwrite
+                    overwrite=overwrite,
+                    job_url=job_url,
                 )
                 self._save_to_db(session, [sql_model_version, model_version_deployment])
                 session.flush()

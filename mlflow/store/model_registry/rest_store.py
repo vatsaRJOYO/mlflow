@@ -1,6 +1,9 @@
 import logging
 
-from mlflow.entities.model_registry import RegisteredModel, ModelVersion
+from google.protobuf import message
+from sqlalchemy.sql.expression import over
+
+from mlflow.entities.model_registry import RegisteredModel, ModelVersion, ModelVersionDeployment
 from mlflow.protos.model_registry_pb2 import (
     ModelRegistryService,
     CreateRegisteredModel,
@@ -22,6 +25,8 @@ from mlflow.protos.model_registry_pb2 import (
     SetModelVersionTag,
     DeleteRegisteredModelTag,
     DeleteModelVersionTag,
+    CreateModelVersionDeployment,
+    UpdateModelVersionDeployment,
 )
 from mlflow.store.entities.paged_list import PagedList
 from mlflow.store.model_registry.abstract_store import AbstractStore
@@ -364,3 +369,67 @@ class RestStore(AbstractStore):
         """
         req_body = message_to_json(DeleteModelVersionTag(name=name, version=version, key=key))
         self._call_endpoint(DeleteModelVersionTag, req_body)
+
+
+    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite, job_url):
+        """
+        Create a model deployment entry, associated with model version
+
+        :param name:  Registered model name
+        :param version: Registered model version
+        :param environment: Environment of deployment
+        :param service_name: Service name of the deployment
+        :param cpu: CPU overwrite of the deployed service
+        :param memory: Memory overwrite of the deployed service
+        :param initial_delay: Initial Delay overwrite of the deployed service 
+        :param overwrite: Overwrite flag of the deployed service
+        :param job_url: Job url of the deployment job
+        """
+        # UNTESTED
+        req_body = message(
+            CreateModelVersionDeployment(
+                name=name,
+                version=version,
+                environment=environment,
+                service_name=service_name,
+                cpu=cpu,
+                memory=memory,
+                initial_delay=initial_delay,
+                overwrite=overwrite,
+                job_url=job_url
+            )
+        )
+        response_proto = self._call_endpoint(CreateModelVersionDeployment, req_body)
+        return ModelVersionDeployment.from_proto(response_proto.model_version_deployment)
+    
+
+    def update_model_version_deployment(self, id, model_name, model_version, jira_id, status, message, job_url, helm_url):
+        """
+        Update a model deployment entry, associated with model version
+
+        :param id: Deployment unique id
+        :param model_name:  Registered model name
+        :param model_version: Registered model version
+        :param jira_id: Jira ID of the deployment entry
+        :param status: status of the job
+        :param message: additional info regarding the status of job
+        :param job_url: url of the job that recieved the build trigger
+        :param helm_url: url of the helm where the model is deployed.
+        """
+        # UNTESTED
+        req_body = globals()['message'](
+            UpdateModelVersionDeployment(
+                id=id,
+                model_name=model_name,
+                model_version=model_version,
+                jira_id=jira_id,
+                status=status,
+                message=message,
+                job_url=job_url,
+                helm_url=helm_url,
+            )
+        )
+        response_proto = self._call_endpoint(UpdateModelVersionDeployment, req_body)
+        return ModelVersionDeployment.from_proto(response_proto.model_version_deployment)
+
+        

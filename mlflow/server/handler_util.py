@@ -89,7 +89,7 @@ def deploy_model_version(
 
     client = _getJenkinsClient(environment=oyo_environemnt)
     if client is None:
-        raise MlflowException('Jenkins client not found', PUBLIC)
+        raise MlflowException('Jenkins client not found. Contact administrator for further details.', PUBLIC)
         
     response = client.triggerJob(params)
 

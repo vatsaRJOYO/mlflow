@@ -263,3 +263,38 @@ class AbstractStore:
         :return: None
         """
         pass
+
+    @abstractmethod
+    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite, job_url):
+        """
+        Create a model deployment entry, associated with model version
+
+        :param name:  Registered model name
+        :param version: Registered model version
+        :param environment: Environment of deployment
+        :param service_name: Service name of the deployment
+        :param cpu: CPU overwrite of the deployed service
+        :param memory: Memory overwrite of the deployed service
+        :param initial_delay: Initial Delay overwrite of the deployed service 
+        :param overwrite: Overwrite flag of the deployed service
+        :param job_url: Job url of the deployment job
+        """
+        pass
+
+    @abstractmethod
+    def update_model_version_deployment(self, id, model_name, model_version, jira_id, status, message, job_url, helm_url):
+        """
+        Update a model deployment entry, associated with model version
+
+        :param id: Deployment unique id
+        :param model_name:  Registered model name
+        :param model_version: Registered model version
+        :param jira_id: Jira ID of the deployment entry
+        :param status: status of the job
+        :param message: additional info regarding the status of job
+        :param job_url: url of the job that recieved the build trigger
+        :param helm_url: url of the helm where the model is deployed.
+        """
+        pass
+
+

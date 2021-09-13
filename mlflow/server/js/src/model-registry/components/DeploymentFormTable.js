@@ -136,7 +136,7 @@ const descritpion_items_ = [
 
     },
     {
-        defaultMessage:'initial_delay',
+        defaultMessage:'Initial Delay Seconds',
         description: 'Label for the   in expanded row of deploymnet section in model version page',
         fieldName: 'initial_delay',
         render: stringRender,

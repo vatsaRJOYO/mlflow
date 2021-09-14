@@ -75,6 +75,8 @@ def deploy_model_version(
 
     params['SERVICE'] = oyo_service_name
     params['TEAM'] = oyo_team_name
+    params['MODEL_NAME'] = model_name
+    params['MODEL_VERSION'] = model_version_number
     params['MLFLOW_ARTIFACT_URI'] = model_source
     params['RESOURCE_OVERWRITE'] = overwrite
     if _stringNotEmptyOrNone(cpu):

@@ -17,6 +17,11 @@ class JenkinsRestApiClient():
     def _setTokenKey(self, params: dict) -> dict:
         params['token'] = self.token_key
         return params
+    
+    def __repr__(self) -> str:
+        return "<JenkinsRestApiClient ({}, {})>".format(
+            self.uri, self.token_key
+        )
 
     
     
@@ -25,6 +30,10 @@ class JenkinsRestApiClient():
         with requests.Session() as sess:
             self._setAuthHeader(session=sess)
             params = self._setTokenKey(params=params)
+            _logger.log(
+                logging.INFO, 
+                'Triggering job on %s with headers %s and params %s', 
+                self.uri, str(sess.headers), str(params))
             try:
                 response = sess.get(self.uri, params=params)
             except Exception:

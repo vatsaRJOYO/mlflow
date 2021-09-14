@@ -30,10 +30,9 @@ def _getJenkinsClient(environment:str):
         for env_name in envs_list:
             env_name_caps = env_name.upper()
             _config = [ os.environ.get(conf.format(env_name_caps)) for conf in JENKINS_CONFIGS_KEYS]
-            _logger.log(logging.INFO, _config)
             if reduce(lambda a, b: a and b , map(lambda a: a is not None, _config)):
                 _jenkins_clients[env_name] = JenkinsRestApiClient(*_config)
-                _logger.log(logging.INFO, env_name+':  '+str(JenkinsRestApiClient))
+                _logger.log(logging.INFO, 'Jenkins client for %s : $s', env_name, str(_jenkins_clients[env_name]))
     
     return _jenkins_clients.get(environment, None)
 
@@ -66,12 +65,12 @@ def deploy_model_version(
     _validate_string(oyo_team_name, "Team Name", " Add team name in the registered model page so it can be reused in all versions")
     _validate_string(model_source, "Model Source")
 
-    _logger.log(logging.INFO, "{}:{} env: {} deployed on {} {}".format(
+    _logger.log(logging.INFO, "Deployment triggered -- {}:{} env: {} service: {}::{}".format(
         model_name, 
         model_version_number, 
-        oyo_environemnt, 
-        oyo_service_name, 
-        oyo_team_name ))
+        oyo_environemnt,  
+        oyo_team_name,
+        oyo_service_name ))
     params = {}
 
     params['SERVICE'] = oyo_service_name
@@ -83,7 +82,7 @@ def deploy_model_version(
     if _stringNotEmptyOrNone(memory):
         params['MEMORY'] = memory
     if _stringNotEmptyOrNone(initial_delay):
-        params['INITIAL_DELAY_SEC '] = initial_delay
+        params['INITIAL_DELAY_SEC'] = initial_delay
     
     
 

@@ -75,6 +75,7 @@ from mlflow.utils.proto_json_utils import message_to_json, parse_dict
 from mlflow.utils.validation import _validate_batch_log_api_req
 from mlflow.utils.string_utils import is_string_type
 from mlflow.tracking.registry import UnsupportedModelRegistryStoreURIException
+from mlflow.server.handler_util import deploy_model_version, _validate_string
 
 _logger = logging.getLogger(__name__)
 _tracking_store = None
@@ -807,14 +808,38 @@ def _deploy_model_version():
         name=request_message.name, version=request_message.version
     )
     registered_model = _get_model_registry_store().get_registered_model(name=request_message.name)
+    oyo_team_name = registered_model.tags.get('team', model_version.tags.get('team', None))
+    _validate_string(oyo_team_name, "Team Name", " Add team name in the Registered Model Tags so it can be reused in all versions")
 
-    # _logger.log(logging.INFO, str(model_version))
-    from mlflow.server.handler_util import deploy_model_version
-
-    deploy_model_version(
-        request_message.environment, request_message.service_name, model_version, registered_model,
-        request_message.overwrite, request_message.cpu, request_message.memory, request_message.initial_delay
+    model_version_deployment = _get_model_registry_store().create_model_deployment(
+        name=request_message.name,
+        version=request_message.version,
+        environment=request_message.environment,
+        service_name=request_message.service_name,
+        cpu=request_message.cpu,
+        memory=request_message.memory,
+        initial_delay=request_message.initial_delay,
+        overwrite=request_message.overwrite,
+        job_url='',
     )
+    
+    try:
+        deploy_model_version(
+            request_message.environment, request_message.service_name, model_version, oyo_team_name,
+            request_message.overwrite, request_message.cpu, request_message.memory, request_message.initial_delay, model_version_deployment.id
+        )
+        model_version_deployment = _get_model_registry_store().update_model_version_deployment(
+            id=model_version_deployment.id, 
+            status='TRIGGERED',
+            message='Job Triggered successfully'
+        )
+    except MlflowException as e:
+        model_version_deployment = _get_model_registry_store().update_model_version_deployment(
+            id=model_version_deployment.id, 
+            status='TRIGGER_FAILED',
+            message='Trigger job failed. Message: '+ e.message
+        )
+        raise e
     
     return _wrap_response(DeployModelVersion.Response())
 
@@ -839,6 +864,7 @@ def _create_model_version_deployment():
 @catch_mlflow_exception
 def _update_model_version_deployment():
     request_message = _get_request_message(UpdateModelVersionDeployment())
+    _logger.log(logging.INFO,'Update model deployment request : %s', str(request_message))
     model_version_deployment = _get_model_registry_store().update_model_version_deployment(
         id=request_message.id,
         jira_id=request_message.jira_id,

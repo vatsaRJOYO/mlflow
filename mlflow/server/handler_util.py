@@ -32,7 +32,7 @@ def _getJenkinsClient(environment:str):
             _config = [ os.environ.get(conf.format(env_name_caps)) for conf in JENKINS_CONFIGS_KEYS]
             if reduce(lambda a, b: a and b , map(lambda a: a is not None, _config)):
                 _jenkins_clients[env_name] = JenkinsRestApiClient(*_config)
-                _logger.log(logging.INFO, 'Jenkins client for %s : $s', env_name, str(_jenkins_clients[env_name]))
+                _logger.log(logging.INFO, 'Jenkins client for %s : %s', env_name, str(_jenkins_clients[env_name]))
     
     return _jenkins_clients.get(environment, None)
 
@@ -49,16 +49,17 @@ def deploy_model_version(
     oyo_environemnt:str, 
     oyo_service_name:str, 
     model_version:ModelVersion, 
-    registered_model:RegisteredModel,
+    team_name:str,
     overwrite: bool,
     cpu: str,
     memory: str,
     initial_delay: str,
+    id=None,
     ):
     model_name = model_version.name
     model_version_number = model_version.version
     model_source = model_version.source
-    oyo_team_name = registered_model.tags.get('team', model_version.tags.get('team', None))
+    oyo_team_name = team_name
 
     _validate_string(oyo_service_name, "Service Name")
     _validate_string(oyo_environemnt, "Deployment Environment")
@@ -85,6 +86,8 @@ def deploy_model_version(
         params['MEMORY'] = memory
     if _stringNotEmptyOrNone(initial_delay):
         params['INITIAL_DELAY_SEC'] = initial_delay
+    if _stringNotEmptyOrNone(id):
+        params['DEPLOY_ID'] = id
     
     
 

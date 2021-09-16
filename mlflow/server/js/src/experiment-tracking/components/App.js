@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import logo from '../../common/static/home-logo.png';
+// import logo from '../../common/static/home-logo.png';
+import logo from '../../common/static/oyo-turing-3.png';
 import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import { RunPage } from './RunPage';
 import Routes from '../routes';
@@ -31,8 +32,12 @@ const isExperimentsActive = (match, location) => {
 };
 
 const classNames = {
-  activeNavLink: { borderBottom: '4px solid #43C9ED' },
+  activeNavLink: { borderBottom: '4px solid #082142' },
 };
+
+// const classNames = {
+//   activeNavLink: { borderBottom: '4px solid #43C9ED' },
+// };
 
 class App extends Component {
   render() {
@@ -71,7 +76,7 @@ class App extends Component {
                 </NavLink>
               </div>
               <div className='header-links'>
-                <a href={'https://github.com/mlflow/mlflow'}>
+                <a href={'https://github.com/oyorooms/turing-mlflow'}>
                   <div className='github'>
                     <span>GitHub</span>
                   </div>

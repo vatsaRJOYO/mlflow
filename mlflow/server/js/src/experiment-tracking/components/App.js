@@ -35,10 +35,6 @@ const classNames = {
   activeNavLink: { borderBottom: '4px solid #082142' },
 };
 
-// const classNames = {
-//   activeNavLink: { borderBottom: '4px solid #43C9ED' },
-// };
-
 class App extends Component {
   render() {
     return (

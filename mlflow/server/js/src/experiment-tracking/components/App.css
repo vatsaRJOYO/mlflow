@@ -49,7 +49,6 @@ a:hover, a:focus {
 }
 
 .App-header {
-  /* background-color: #082142; */
   background-color: #f5f7f7;
   height: 60px;
   color: #082142;
@@ -86,13 +85,11 @@ img.mlflow-logo {
 
 div.github {
   padding-right: 24px;
-  /* color: #ffffff; */
   color: #082142;
 
 }
 
 div.docs {
-  /* color: #ffffff; */
   color: #082142;
 }
 
@@ -109,7 +106,6 @@ div.docs {
 }
 
 div.experiments, div.models {
-  /* color: #ffffff; */
   color: #082142;
 
 }

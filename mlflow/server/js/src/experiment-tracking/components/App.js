@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-// import logo from '../../common/static/home-logo.png';
 import logo from '../../common/static/oyo-turing-3.png';
 import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import { RunPage } from './RunPage';

@@ -12,8 +12,8 @@ import time
 
 
 # revision identifiers, used by Alembic.
-revision = '11eabc45185d'
-down_revision = 'c48cb773bb87'
+revision = "11eabc45185d"
+down_revision = "c48cb773bb87"
 branch_labels = None
 depends_on = None
 
@@ -37,7 +37,6 @@ def upgrade():
         sa.Column("overwrite", sa.Boolean(), nullable=False, default=False),
         sa.Column("creation_time", sa.BigInteger, default=lambda: int(time.time() * 1000)),
         sa.Column("last_updated_time", sa.BigInteger, nullable=True, default=None),
-
         sa.ForeignKeyConstraint(
             ("name", "version"),
             ("model_versions.name", "model_versions.version"),

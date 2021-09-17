@@ -143,8 +143,8 @@ class SqlAlchemyStore(AbstractStore):
         # techniques, see https://docs.sqlalchemy.org/en/13/orm/
         # loading_relationships.html#relationship-loading-techniques
         return [
-            sqlalchemy.orm.subqueryload(SqlModelVersion.model_version_tags), 
-            sqlalchemy.orm.subqueryload(SqlModelVersion.model_version_deployments), 
+            sqlalchemy.orm.subqueryload(SqlModelVersion.model_version_tags),
+            sqlalchemy.orm.subqueryload(SqlModelVersion.model_version_deployments),
         ]
 
     def _save_to_db(self, session, objs):
@@ -844,8 +844,19 @@ class SqlAlchemyStore(AbstractStore):
             existing_tag = self._get_model_version_tag(session, name, version, key)
             if existing_tag is not None:
                 session.delete(existing_tag)
-    
-    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite, job_url):
+
+    def create_model_deployment(
+        self,
+        name,
+        version,
+        environment,
+        service_name,
+        cpu,
+        memory,
+        initial_delay,
+        overwrite,
+        job_url,
+    ):
 
         _validate_model_name(name)
         _validate_model_version(version)
@@ -875,7 +886,7 @@ class SqlAlchemyStore(AbstractStore):
                 _logger.info(
                     "Model Version deployment creation error (name=%s version=%s).",
                     name,
-                    str(version)
+                    str(version),
                 )
         raise MlflowException(
             "Model Version deployment creation error creation error (name={} version={}). Giving up."
@@ -885,15 +896,19 @@ class SqlAlchemyStore(AbstractStore):
     def _get_model_version_deployment_from_db(cls, session, id, conditions, query_options=None):
         if query_options is None:
             query_options = []
-        versions = session.query(SqlModelVersionDeployment).options(*query_options).filter(*conditions).all()
+        versions = (
+            session.query(SqlModelVersionDeployment)
+            .options(*query_options)
+            .filter(*conditions)
+            .all()
+        )
 
         if len(versions) == 0:
             raise MlflowException(
-                "Model Version (id ={}) " "not found".format(id),
-                RESOURCE_DOES_NOT_EXIST,
+                "Model Version (id ={}) " "not found".format(id), RESOURCE_DOES_NOT_EXIST,
             )
         return versions[0]
-    
+
     @classmethod
     def _get_sql_model_version_deployment(cls, session, id):
 
@@ -903,10 +918,19 @@ class SqlAlchemyStore(AbstractStore):
         ]
         return cls._get_model_version_deployment_from_db(session, id, conditions, [])
 
-    def update_model_version_deployment(self, id, model_name=None, model_version=None, jira_id=None, status=None, message=None, job_url=None, helm_url=None):
-
+    def update_model_version_deployment(
+        self,
+        id,
+        model_name=None,
+        model_version=None,
+        jira_id=None,
+        status=None,
+        message=None,
+        job_url=None,
+        helm_url=None,
+    ):
         def isStringEmpty(value):
-            if value == "" or value is None or  not isinstance(value, str):
+            if value == "" or value is None or not isinstance(value, str):
                 return True
             return False
 
@@ -914,19 +938,25 @@ class SqlAlchemyStore(AbstractStore):
             last_updated_time = now()
 
             sql_model_version_deployment = self._get_sql_model_version_deployment(
-                session=session, id = id
+                session=session, id=id
             )
 
-            if (not isStringEmpty(model_name) and sql_model_version_deployment.model_name != model_name):
+            if (
+                not isStringEmpty(model_name)
+                and sql_model_version_deployment.model_name != model_name
+            ):
                 raise MlflowException(
                     "Model Version deployment (id={}, name={}) " "not found".format(id, model_name),
                     RESOURCE_DOES_NOT_EXIST,
                 )
-            
+
             try:
-                if (not isStringEmpty(model_name)) and int(model_version) != int(sql_model_version_deployment.model_version):
+                if (not isStringEmpty(model_name)) and int(model_version) != int(
+                    sql_model_version_deployment.model_version
+                ):
                     raise MlflowException(
-                        "Model Version deployment (id={}, version={}) " "not found".format(id, version),
+                        "Model Version deployment (id={}, version={}) "
+                        "not found".format(id, version),
                         RESOURCE_DOES_NOT_EXIST,
                     )
             except ValueError:
@@ -934,31 +964,30 @@ class SqlAlchemyStore(AbstractStore):
                     "Model version must be an integer, got '{}'".format(model_version),
                     error_code=INVALID_PARAMETER_VALUE,
                 )
-            
+
             if sql_model_version_deployment.model_version.current_stage == STAGE_DELETED_INTERNAL:
                 raise MlflowException(
-                    "Model version stage must not be deleted , got '{}'".format(sql_model_version_deployment.cuttent_stage),
+                    "Model version stage must not be deleted , got '{}'".format(
+                        sql_model_version_deployment.cuttent_stage
+                    ),
                     error_code=INVALID_PARAMETER_VALUE,
                 )
-            
+
             if not isStringEmpty(jira_id):
                 sql_model_version_deployment.jira_id = jira_id
-            
+
             if not isStringEmpty(status):
                 sql_model_version_deployment.status = status
-            
+
             if not isStringEmpty(message):
                 sql_model_version_deployment.message = message
-            
+
             if not isStringEmpty(job_url):
                 sql_model_version_deployment.job_url = job_url
-            
+
             if not isStringEmpty(helm_url):
                 sql_model_version_deployment.helm_url = helm_url
-                
+
             sql_model_version_deployment.last_updated_time = last_updated_time
-            self._save_to_db(session, [ sql_model_version_deployment])
+            self._save_to_db(session, [sql_model_version_deployment])
             return sql_model_version_deployment.to_mlflow_entity()
-
-
-

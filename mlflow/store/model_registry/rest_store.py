@@ -370,8 +370,18 @@ class RestStore(AbstractStore):
         req_body = message_to_json(DeleteModelVersionTag(name=name, version=version, key=key))
         self._call_endpoint(DeleteModelVersionTag, req_body)
 
-
-    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite, job_url):
+    def create_model_deployment(
+        self,
+        name,
+        version,
+        environment,
+        service_name,
+        cpu,
+        memory,
+        initial_delay,
+        overwrite,
+        job_url,
+    ):
         """
         Create a model deployment entry, associated with model version
 
@@ -396,14 +406,15 @@ class RestStore(AbstractStore):
                 memory=memory,
                 initial_delay=initial_delay,
                 overwrite=overwrite,
-                job_url=job_url
+                job_url=job_url,
             )
         )
         response_proto = self._call_endpoint(CreateModelVersionDeployment, req_body)
         return ModelVersionDeployment.from_proto(response_proto.model_version_deployment)
-    
 
-    def update_model_version_deployment(self, id, model_name, model_version, jira_id, status, message, job_url, helm_url):
+    def update_model_version_deployment(
+        self, id, model_name, model_version, jira_id, status, message, job_url, helm_url
+    ):
         """
         Update a model deployment entry, associated with model version
 
@@ -417,7 +428,7 @@ class RestStore(AbstractStore):
         :param helm_url: url of the helm where the model is deployed.
         """
         # UNTESTED
-        req_body = globals()['message'](
+        req_body = globals()["message"](
             UpdateModelVersionDeployment(
                 id=id,
                 model_name=model_name,
@@ -431,5 +442,3 @@ class RestStore(AbstractStore):
         )
         response_proto = self._call_endpoint(UpdateModelVersionDeployment, req_body)
         return ModelVersionDeployment.from_proto(response_proto.model_version_deployment)
-
-        

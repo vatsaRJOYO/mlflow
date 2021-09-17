@@ -265,7 +265,18 @@ class AbstractStore:
         pass
 
     @abstractmethod
-    def create_model_deployment(self, name, version, environment, service_name, cpu, memory, initial_delay, overwrite, job_url):
+    def create_model_deployment(
+        self,
+        name,
+        version,
+        environment,
+        service_name,
+        cpu,
+        memory,
+        initial_delay,
+        overwrite,
+        job_url,
+    ):
         """
         Create a model deployment entry, associated with model version
 
@@ -282,7 +293,9 @@ class AbstractStore:
         pass
 
     @abstractmethod
-    def update_model_version_deployment(self, id, model_name, model_version, jira_id, status, message, job_url, helm_url):
+    def update_model_version_deployment(
+        self, id, model_name, model_version, jira_id, status, message, job_url, helm_url
+    ):
         """
         Update a model deployment entry, associated with model version
 
@@ -296,5 +309,3 @@ class AbstractStore:
         :param helm_url: url of the helm where the model is deployed.
         """
         pass
-
-

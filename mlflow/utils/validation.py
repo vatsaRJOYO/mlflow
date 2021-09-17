@@ -311,6 +311,7 @@ def _validate_db_type_string(db_type):
         error_msg = "Invalid database engine: '%s'. '%s'" % (db_type, _UNSUPPORTED_DB_TYPE_MSG)
         raise MlflowException(error_msg, INVALID_PARAMETER_VALUE)
 
+
 def _validate_model_deployment_service_name(service_name):
     """Check that `service_name` is a valid string and raise an exception if it isn't."""
     if service_name == "" or service_name is None:

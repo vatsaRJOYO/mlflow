@@ -111,7 +111,7 @@ class SqlModelVersion(Base):
             self.status_message,
             [tag.to_mlflow_entity() for tag in self.model_version_tags],
             self.run_link,
-            [deployment.to_mlflow_entity() for deployment in self.model_version_deployments]
+            [deployment.to_mlflow_entity() for deployment in self.model_version_deployments],
         )
 
 
@@ -175,6 +175,7 @@ class SqlModelVersionTag(Base):
     def to_mlflow_entity(self):
         return ModelVersionTag(self.key, self.value)
 
+
 class SqlModelVersionDeployment(Base):
     __tablename__ = "model_version_deployments"
 
@@ -196,7 +197,7 @@ class SqlModelVersionDeployment(Base):
 
     last_updated_time = Column(BigInteger, nullable=True, default=None)
 
-    message = Column(String(), default='Deployment Entry Created')
+    message = Column(String(), default="Deployment Entry Created")
 
     job_url = Column(String())
 
@@ -227,14 +228,12 @@ class SqlModelVersionDeployment(Base):
     )
 
     def __repr__(self):
-        return "<SqlModelVersionDeployment ({}, {}, {})>".format(
-            self.id, self.name, self.version
-        )
+        return "<SqlModelVersionDeployment ({}, {}, {})>".format(self.id, self.name, self.version)
 
     # entity mappers
     def to_mlflow_entity(self):
         return ModelVersionDeployment(
-            id = self.id,
+            id=self.id,
             environment=self.environment,
             service_name=self.service_name,
             jira_id=self.jira_id,
@@ -247,5 +246,5 @@ class SqlModelVersionDeployment(Base):
             cpu=self.cpu,
             memory=self.memory,
             initial_delay=self.initial_delay,
-            overwrite=self.overwrite       
+            overwrite=self.overwrite,
         )

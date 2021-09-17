@@ -801,6 +801,7 @@ def _delete_model_version_tag():
     )
     return _wrap_response(DeleteModelVersionTag.Response())
 
+
 @catch_mlflow_exception
 def _deploy_model_version():
     request_message = _get_request_message(DeployModelVersion())
@@ -808,8 +809,12 @@ def _deploy_model_version():
         name=request_message.name, version=request_message.version
     )
     registered_model = _get_model_registry_store().get_registered_model(name=request_message.name)
-    oyo_team_name = registered_model.tags.get('team', model_version.tags.get('team', None))
-    _validate_string(oyo_team_name, "Team Name", " Add team name in the Registered Model Tags so it can be reused in all versions")
+    oyo_team_name = registered_model.tags.get("team", model_version.tags.get("team", None))
+    _validate_string(
+        oyo_team_name,
+        "Team Name",
+        " Add team name in the Registered Model Tags so it can be reused in all versions",
+    )
 
     model_version_deployment = _get_model_registry_store().create_model_deployment(
         name=request_message.name,
@@ -820,28 +825,34 @@ def _deploy_model_version():
         memory=request_message.memory,
         initial_delay=request_message.initial_delay,
         overwrite=request_message.overwrite,
-        job_url='',
+        job_url="",
     )
-    
+
     try:
         deploy_model_version(
-            request_message.environment, request_message.service_name, model_version, oyo_team_name,
-            request_message.overwrite, request_message.cpu, request_message.memory, request_message.initial_delay, model_version_deployment.id
+            request_message.environment,
+            request_message.service_name,
+            model_version,
+            oyo_team_name,
+            request_message.overwrite,
+            request_message.cpu,
+            request_message.memory,
+            request_message.initial_delay,
+            model_version_deployment.id,
         )
         model_version_deployment = _get_model_registry_store().update_model_version_deployment(
-            id=model_version_deployment.id, 
-            status='TRIGGERED',
-            message='Job Triggered successfully'
+            id=model_version_deployment.id, status="TRIGGERED", message="Job Triggered successfully"
         )
     except MlflowException as e:
         model_version_deployment = _get_model_registry_store().update_model_version_deployment(
-            id=model_version_deployment.id, 
-            status='TRIGGER_FAILED',
-            message='Trigger job failed. Message: '+ e.message
+            id=model_version_deployment.id,
+            status="TRIGGER_FAILED",
+            message="Trigger job failed. Message: " + e.message,
         )
         raise e
-    
+
     return _wrap_response(DeployModelVersion.Response())
+
 
 @catch_mlflow_exception
 def _create_model_version_deployment():
@@ -864,7 +875,7 @@ def _create_model_version_deployment():
 @catch_mlflow_exception
 def _update_model_version_deployment():
     request_message = _get_request_message(UpdateModelVersionDeployment())
-    _logger.log(logging.INFO,'Update model deployment request : %s', str(request_message))
+    _logger.log(logging.INFO, "Update model deployment request : %s", str(request_message))
     model_version_deployment = _get_model_registry_store().update_model_version_deployment(
         id=request_message.id,
         jira_id=request_message.jira_id,
@@ -875,8 +886,6 @@ def _update_model_version_deployment():
     )
     response_message = model_version_deployment.to_proto()
     return _wrap_response(response_message)
-
-
 
 
 def _add_static_prefix(route):
@@ -968,5 +977,4 @@ HANDLERS = {
     DeployModelVersion: _deploy_model_version,
     CreateModelVersionDeployment: _create_model_version_deployment,
     UpdateModelVersionDeployment: _update_model_version_deployment,
-
 }

@@ -39,7 +39,6 @@ class ModelVersionDeployment(_ModelRegistryEntity):
         self._initial_delay = initial_delay
         self._overwrite = overwrite
 
-
     @property
     def service_name(self):
         return self._service_name
@@ -95,7 +94,7 @@ class ModelVersionDeployment(_ModelRegistryEntity):
     @property
     def overwrite(self):
         return self._overwrite
-    
+
     @service_name.setter
     def version(self, service_name):
         self._service_name = service_name
@@ -151,12 +150,11 @@ class ModelVersionDeployment(_ModelRegistryEntity):
     @overwrite.setter
     def overwrite(self, overwrite):
         self._overwrite = overwrite
-    
 
     @classmethod
     def _properties(cls):
         return sorted(cls._get_properties_helper())
-    
+
     @classmethod
     def from_proto(cls, proto: ProtoModelVersionDeployment):
         # input: mlflow.protos.model_registry_pb2.ModelVersionDeployment
@@ -179,7 +177,7 @@ class ModelVersionDeployment(_ModelRegistryEntity):
             proto.overwrite,
         )
         return model_version_deployment
-    
+
     def to_proto(self):
 
         mvd = ProtoModelVersionDeployment()
@@ -187,7 +185,6 @@ class ModelVersionDeployment(_ModelRegistryEntity):
         mvd.environment = self.environment
         mvd.service_name = self.service_name
         mvd.creation_timestamp = self.creation_timestamp
-
 
         if self.jira_id is not None:
             mvd.jira_id = self.jira_id
@@ -209,15 +206,5 @@ class ModelVersionDeployment(_ModelRegistryEntity):
             mvd.initial_delay = self.initial_delay
         if self.overwrite is not None:
             mvd.overwrite = self.overwrite
-        
+
         return mvd
-
-
-
-    
-    
-    
-
-
-
-        

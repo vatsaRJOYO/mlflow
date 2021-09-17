@@ -111,7 +111,7 @@ class ModelVersion(_ModelRegistryEntity):
     def tags(self):
         """Dictionary of tag key (string) -> tag value for the current model version."""
         return self._tags
-    
+
     @property
     def deployments(self):
         return self._deployments
@@ -148,7 +148,9 @@ class ModelVersion(_ModelRegistryEntity):
         )
         for tag in proto.tags:
             model_version._add_tag(ModelVersionTag.from_proto(tag))
-        deployments = [ ModelVersionDeployment.from_proto(deployment) for deployment in proto.deployments ]
+        deployments = [
+            ModelVersionDeployment.from_proto(deployment) for deployment in proto.deployments
+        ]
         model_version._set_deployments(deployments=deployments)
         return model_version
 
@@ -181,6 +183,6 @@ class ModelVersion(_ModelRegistryEntity):
             [ProtoModelVersionTag(key=key, value=value) for key, value in self._tags.items()]
         )
         model_version.deployments.extend(
-            [ deployment.to_proto() for deployment in self._deployments ]
+            [deployment.to_proto() for deployment in self._deployments]
         )
         return model_version

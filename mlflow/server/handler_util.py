@@ -3,7 +3,6 @@ import logging
 import os
 from mlflow.protos.databricks_pb2 import INTERNAL, INVALID_PARAMETER_VALUE, PUBLIC
 from mlflow.exceptions import MlflowException
-from mlflow.entities.model_registry.registered_model import RegisteredModel
 from mlflow.entities.model_registry.model_version import ModelVersion
 from functools import reduce
 
@@ -27,7 +26,8 @@ def _getJenkinsClient(environment: str):
         envs = os.environ.get("DEPLOYMENT_ENVS")
         if envs is None:
             raise MlflowException(
-                "Cannot deploy due to bad jenkins environment variable config. Contact administrator for further details.",
+                "Cannot deploy due to bad jenkins environment variable config. "
+                "Contact administrator for further details.",
                 INTERNAL,
             )
         envs_list = envs.strip().split(",")
@@ -85,9 +85,12 @@ def deploy_model_version(
 
     _logger.log(
         logging.INFO,
-        "Deployment triggered -- {}:{} env: {} service: {}::{}".format(
-            model_name, model_version_number, oyo_environemnt, oyo_team_name, oyo_service_name
-        ),
+        "Deployment triggered -- %s:%s env: %s service: %s::%s",
+        model_name,
+        model_version_number,
+        oyo_environemnt,
+        oyo_team_name,
+        oyo_service_name,
     )
     params = {}
 

@@ -1,8 +1,5 @@
 import logging
 
-from google.protobuf import message
-from sqlalchemy.sql.expression import over
-
 from mlflow.entities.model_registry import RegisteredModel, ModelVersion, ModelVersionDeployment
 from mlflow.protos.model_registry_pb2 import (
     ModelRegistryService,
@@ -391,12 +388,12 @@ class RestStore(AbstractStore):
         :param service_name: Service name of the deployment
         :param cpu: CPU overwrite of the deployed service
         :param memory: Memory overwrite of the deployed service
-        :param initial_delay: Initial Delay overwrite of the deployed service 
+        :param initial_delay: Initial Delay overwrite of the deployed service
         :param overwrite: Overwrite flag of the deployed service
         :param job_url: Job url of the deployment job
         """
         # UNTESTED
-        req_body = message(
+        req_body = message_to_json(
             CreateModelVersionDeployment(
                 name=name,
                 version=version,
@@ -428,7 +425,7 @@ class RestStore(AbstractStore):
         :param helm_url: url of the helm where the model is deployed.
         """
         # UNTESTED
-        req_body = globals()["message"](
+        req_body = message_to_json(
             UpdateModelVersionDeployment(
                 id=id,
                 model_name=model_name,

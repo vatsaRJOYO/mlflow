@@ -286,7 +286,7 @@ class AbstractStore:
         :param service_name: Service name of the deployment
         :param cpu: CPU overwrite of the deployed service
         :param memory: Memory overwrite of the deployed service
-        :param initial_delay: Initial Delay overwrite of the deployed service 
+        :param initial_delay: Initial Delay overwrite of the deployed service
         :param overwrite: Overwrite flag of the deployed service
         :param job_url: Job url of the deployment job
         """

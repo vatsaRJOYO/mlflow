@@ -889,7 +889,7 @@ class SqlAlchemyStore(AbstractStore):
                     str(version),
                 )
         raise MlflowException(
-            "Model Version deployment creation error creation error (name={} version={}). Giving up."
+            "Model Version deployment creation error (name={} version={}). Giving up."
         )
 
     @classmethod
